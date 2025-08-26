@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://bniu2466p8p52"]
+
+[ext_resource type="Script" uid="uid://bqtmm3174sw6j" path="res://scene/item/exaite.gd" id="1_brg5q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_brg5q"]
+size = Vector2(11, 11)
+
+[node name="exaite" type="StaticBody2D"]
+script = ExtResource("1_brg5q")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-0.0117188, -0.00390649)
+rotation = -3.14159
+scale = Vector2(0.313, 0.4)
+hframes = 4
+vframes = 5
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_brg5q")

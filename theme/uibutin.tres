@@ -1,0 +1,44 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://l6aifit45yok"]
+
+[ext_resource type="FontFile" uid="uid://dsix43ph6yvjm" path="res://assets/fonts/PixelifySans-VariableFont_wght.ttf" id="1_bbfpt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e8qeg"]
+content_margin_left = 15.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.164706, 0.164706, 0.164706, 0.745098)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.717647, 0.862745, 0.909804, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bbfpt"]
+content_margin_left = 15.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bbfpt"]
+content_margin_left = 15.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[resource]
+Button/font_sizes/font_size = 28
+Button/fonts/font = ExtResource("1_bbfpt")
+Button/styles/focus = SubResource("StyleBoxFlat_e8qeg")
+Button/styles/hover = SubResource("StyleBoxFlat_e8qeg")
+Button/styles/normal = SubResource("StyleBoxEmpty_bbfpt")
+Button/styles/pressed = SubResource("StyleBoxFlat_bbfpt")

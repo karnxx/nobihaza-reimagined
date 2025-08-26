@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://c08svlhuvsrtt"]
+
+[ext_resource type="Script" uid="uid://cx87fqrguki85" path="res://scene/item/guns/pistol_item.gd" id="1_xmbob"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jaby1"]
+size = Vector2(12, 12)
+
+[node name="pistol_item" type="StaticBody2D"]
+script = ExtResource("1_xmbob")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_jaby1")

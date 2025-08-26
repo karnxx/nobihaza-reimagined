@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://y1qqhfg7b3a1"]
+
+[ext_resource type="Texture2D" uid="uid://chefol5ck6ihj" path="res://assets/player/flash.png" id="1_wj4kw"]
+
+[node name="screen_flash" type="Sprite2D"]
+modulate = Color(1, 0.85098, 0.301961, 1)
+z_index = 1
+position = Vector2(3.016e-05, -1.0252e-05)
+scale = Vector2(177.778, 100)
+texture = ExtResource("1_wj4kw")
