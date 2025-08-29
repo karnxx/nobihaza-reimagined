@@ -1,5 +1,5 @@
 extends Node
-
+var tile_size = 16
 var next_spawn: String = "" 
 
 func change_scene(sceen, spawn) -> void:

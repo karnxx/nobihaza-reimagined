@@ -1,6 +1,8 @@
 extends Node2D 
 
 func _ready() -> void: 
+
+	
 	if GameManager.next_spawn != "": 
 		var spawn = get_node_or_null("spawns/" + GameManager.next_spawn) 
 		if spawn and has_node("plr"): 

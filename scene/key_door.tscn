@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://crqjfriagr55x"]
+
+[ext_resource type="Script" uid="uid://bhicwsdne8cmw" path="res://scene/key_door.gd" id="1_k1bjm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y5pye"]
+size = Vector2(8, 8)
+
+[node name="key_door" type="StaticBody2D"]
+script = ExtResource("1_k1bjm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_y5pye")

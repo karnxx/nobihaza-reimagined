@@ -15,7 +15,7 @@ var facing : String = "left"
 var sprite_node_tween : Tween
 var target_pos :Vector2
 var tile_size = 16
-var speed = 0.15
+var speed = tile_size * 6
 var anim = ""
 var is_equipped = false
 var is_equipping = false  
@@ -28,7 +28,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if !InventoryManager.freeze:
 		check_interactable()
-	if Input.is_action_just_pressed("inv"):
+	if Input.is_action_just_pressed("inv") and is_equipped == false:
 		show_inv()
 	if Input.is_action_just_pressed("equip"):
 		primary_gun = InventoryManager.gun_inv[0]
@@ -45,58 +45,64 @@ func animatee(animation: String, flip: bool) -> void:
 	$AnimatedSprite2D.flip_h = flip
 
 func movement() -> void:
-	if sprite_node_tween and sprite_node_tween.is_running():
+	if (sprite_node_tween and sprite_node_tween.is_running()) or is_equipping or is_shooting:
 		return
 
 	var dir := Vector2.ZERO
-	
-	if is_equipping:
-		return
-	if is_shooting:
-		return
-	
+	var anim_name := ""
+	var flip := false
+
 	if Input.is_action_pressed("ui_up") and not $movement/up.is_colliding():
 		dir = Vector2(0, -1)
-		animatee(anim + "walk_back", false)
-		facing = "up"
+		anim_name = "walk_back"
+
 	elif Input.is_action_pressed("ui_down") and not $movement/down.is_colliding():
 		dir = Vector2(0, 1)
-		animatee(anim + "walk_front", false)
-		facing = "down"
+		anim_name = "walk_front"
+
 	elif Input.is_action_pressed("ui_left") and not $movement/left.is_colliding():
 		dir = Vector2(-1, 0)
-		animatee(anim + "walk_side", false)
-		facing = "left"
+		anim_name = "walk_side"
+
 	elif Input.is_action_pressed("ui_right") and not $movement/right.is_colliding():
 		dir = Vector2(1, 0)
-		animatee(anim + "walk_side", true)
-		facing = "right"
-	else: 
-		dir = Vector2(0,0)
-		if facing == "left":
-			animatee(anim + "idle_side", false)
-		elif facing == "right":
-			animatee(anim + "idle_side", true)
-		elif facing == "up":
-			animatee(anim + "idle_back", false)
-		elif facing == "down":
-			animatee(anim + "idle_front", false)
+		anim_name = "walk_side"
+		flip = true
+
+	else:
+		match facing:
+			"left":  animatee(anim + "idle_side", false)
+			"right": animatee(anim + "idle_side", true)
+			"up":    animatee(anim + "idle_back", false)
+			"down":  animatee(anim + "idle_front", false)
+
+	if dir != Vector2.ZERO and move(dir):
+		if dir.x < 0: facing = "left"
+		elif dir.x > 0: facing = "right"
+		elif dir.y < 0: facing = "up"
+		elif dir.y > 0: facing = "down"
+		animatee(anim + anim_name, flip)
+
 	
-	if dir != Vector2.ZERO:
-		move(dir)
-	
-func move(dir: Vector2) -> void:
+func move(dir: Vector2) -> bool:
 	if is_moving:
-		return
-	
+		return false  
 	is_moving = true
 	target_pos = position + dir * tile_size
+	var distance := position.distance_to(target_pos)
+	var duration = max(0.05, distance / speed)
+	if sprite_node_tween and sprite_node_tween.is_running():
+		sprite_node_tween.kill()
 	
-	var tween = get_tree().create_tween()
-	tween.tween_property(self, "position", target_pos, speed) .set_trans(Tween.TRANS_SINE) .set_ease(Tween.EASE_IN_OUT)
-	tween.connect("finished", Callable(self, "move_finish"))
+	sprite_node_tween = create_tween()
+	sprite_node_tween.tween_property(self, "position", target_pos, duration)\
+		.set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
+	sprite_node_tween.finished.connect(move_finish)
+	return true
+
 	
 func move_finish() -> void:
+	position = target_pos.snapped(Vector2.ONE)
 	is_moving = false
 	
 func check_interactable():
@@ -143,7 +149,7 @@ func equip() -> void:
 	
 	if is_equipped:
 		anim = primary_gun["name"] + "_"
-		
+		speed = primary_gun["walk_speed"] * tile_size
 		if facing == "right":
 			$AnimatedSprite2D.play(primary_gun["name"] + "_equip_side")
 			$AnimatedSprite2D.flip_h = true
@@ -161,7 +167,7 @@ func equip() -> void:
 		is_equipping = false
 	else:
 		anim = ""
-		
+		speed = tile_size * 6
 		if facing == "right":
 			$AnimatedSprite2D.play_backwards(primary_gun["name"] + "_equip_side")
 			$AnimatedSprite2D.flip_h = true
@@ -181,6 +187,8 @@ func equip() -> void:
 func shoot():
 	if is_equipped == true:
 		is_shooting = true
+		var guncrip = primary_gun["script"].new()
+		guncrip.shoot(primary_gun, self)
 		if facing == "right":
 			$AnimatedSprite2D.play(primary_gun["name"] + "_shoot_side")
 			$AnimatedSprite2D.flip_h = true
@@ -208,3 +216,13 @@ func flash_screen():
 	tasdasd.connect("timeout", Callable(flash_instance, "queue_free"))
 	flash_instance.add_child(tasdasd)
 	tasdasd.start()
+
+func get_rayray():
+	if facing == "up":
+		return $aim/up
+	elif facing == "down":
+		return $aim/down
+	elif facing == "right":
+		return $aim/right
+	elif facing == "left":
+		return $aim/left

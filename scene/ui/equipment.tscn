@@ -1,0 +1,113 @@
+[gd_scene load_steps=11 format=3 uid="uid://dvapv0qi8g4uh"]
+
+[ext_resource type="Script" uid="uid://blc2ys2kslv1u" path="res://scene/ui/equipment.gd" id="1_1o5mh"]
+[ext_resource type="Texture2D" uid="uid://bb1incfnoi54g" path="res://assets/tileset/ui_3.png" id="1_gw7vi"]
+[ext_resource type="FontFile" uid="uid://dsix43ph6yvjm" path="res://assets/fonts/PixelifySans-VariableFont_wght.ttf" id="2_q2pwm"]
+[ext_resource type="Texture2D" uid="uid://dpiai8p0p2pva" path="res://assets/tileset/ui_1.png" id="3_7eo1m"]
+[ext_resource type="Texture2D" uid="uid://ypqit6hfpupx" path="res://assets/tileset/ui_2.png" id="4_1o5mh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2spmw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a0jxd"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2spmw"]
+content_margin_left = 50.0
+content_margin_top = 10.0
+content_margin_right = 50.0
+content_margin_bottom = 10.0
+texture = ExtResource("3_7eo1m")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_upqen"]
+content_margin_left = 50.0
+content_margin_top = 10.0
+content_margin_right = 50.0
+content_margin_bottom = 10.0
+
+[sub_resource type="Theme" id="Theme_1o5mh"]
+TabContainer/styles/panel = SubResource("StyleBoxEmpty_a0jxd")
+TabContainer/styles/tab_selected = SubResource("StyleBoxTexture_2spmw")
+TabContainer/styles/tab_unselected = SubResource("StyleBoxEmpty_upqen")
+
+[node name="equipment" type="CanvasLayer"]
+script = ExtResource("1_1o5mh")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 337.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 0.66)
+texture = ExtResource("1_gw7vi")
+
+[node name="Label" type="Label" parent="TextureRect"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 15.0
+offset_right = 110.0
+offset_bottom = 38.0
+theme_override_fonts/font = ExtResource("2_q2pwm")
+theme_override_font_sizes/font_size = 32
+text = "EQUIPMENT:"
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = 8.0
+offset_top = 45.0
+offset_right = 455.0
+offset_bottom = 640.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_2spmw")
+
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 11.0
+offset_right = 442.0
+offset_bottom = 736.0
+scale = Vector2(1, 0.8)
+texture = ExtResource("3_7eo1m")
+
+[node name="TabContainer" type="TabContainer" parent="."]
+offset_left = 455.0
+offset_top = 46.0
+offset_right = 1146.0
+offset_bottom = 640.0
+theme = SubResource("Theme_1o5mh")
+tab_alignment = 1
+current_tab = 0
+
+[node name="PRIMARY" type="TabBar" parent="TabContainer"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../UTILS")
+focus_neighbor_right = NodePath("../SECONDARY")
+metadata/_tab_index = 0
+
+[node name="TextureRect" type="TextureRect" parent="TabContainer/PRIMARY"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 11.0
+offset_right = 1132.0
+offset_bottom = 674.0
+scale = Vector2(1, 0.8)
+texture = ExtResource("4_1o5mh")
+
+[node name="SECONDARY" type="TabBar" parent="TabContainer"]
+visible = false
+layout_mode = 2
+focus_neighbor_left = NodePath("../PRIMARY")
+focus_neighbor_right = NodePath("../ARMOR")
+metadata/_tab_index = 1
+
+[node name="ARMOR" type="TabBar" parent="TabContainer"]
+visible = false
+layout_mode = 2
+focus_neighbor_left = NodePath("../SECONDARY")
+focus_neighbor_right = NodePath("../UTILS")
+metadata/_tab_index = 2
+
+[node name="UTILS" type="TabBar" parent="TabContainer"]
+visible = false
+layout_mode = 2
+focus_neighbor_left = NodePath("../ARMOR")
+focus_neighbor_right = NodePath("../PRIMARY")
+metadata/_tab_index = 3

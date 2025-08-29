@@ -546,13 +546,3 @@ visible = false
 
 [node name="invsyb" parent="plr/camera" instance=ExtResource("6_wkc7i")]
 visible = false
-
-[node name="Label" type="Label" parent="plr/camera"]
-offset_left = 97.0
-offset_top = -112.0
-offset_right = 277.0
-offset_bottom = -37.0
-theme_override_font_sizes/font_size = 9
-text = "i for inv,
-n or ui_enter for accept
-j to equip gun."
