@@ -8,4 +8,4 @@ func _ready() -> void:
 		if spawn and has_node("plr"): 
 			$plr.global_position = spawn.global_position 
 		GameManager.next_spawn = ""
-	$door.spawnwn = "spawn1"
+	$walkdoor.spawnwn = "spawn1"

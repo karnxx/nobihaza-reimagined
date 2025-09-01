@@ -4,6 +4,9 @@ signal inv_upd
 var freeze = false
 var inv = []
 var gun_inv = []
+var secondary_inv = []
+var armor_inv = []
+var utils_inv = []
 var plr : Node = null
 
 func _ready() -> void:

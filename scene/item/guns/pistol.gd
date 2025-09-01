@@ -1,8 +1,7 @@
 extends Node
 
-func shoot(gun, plr):
+func shoot(dmg, plr):
 	var current_rayray = plr.get_rayray()
-	var dmg = gun["damage"]
 	const common_crit = 0.1
 	const rare_crit = 0.01
 	var random = randf()

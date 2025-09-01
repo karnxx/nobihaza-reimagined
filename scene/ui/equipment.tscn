@@ -1,12 +1,18 @@
-[gd_scene load_steps=11 format=3 uid="uid://dvapv0qi8g4uh"]
+[gd_scene load_steps=17 format=3 uid="uid://dvapv0qi8g4uh"]
 
 [ext_resource type="Script" uid="uid://blc2ys2kslv1u" path="res://scene/ui/equipment.gd" id="1_1o5mh"]
 [ext_resource type="Texture2D" uid="uid://bb1incfnoi54g" path="res://assets/tileset/ui_3.png" id="1_gw7vi"]
 [ext_resource type="FontFile" uid="uid://dsix43ph6yvjm" path="res://assets/fonts/PixelifySans-VariableFont_wght.ttf" id="2_q2pwm"]
-[ext_resource type="Texture2D" uid="uid://dpiai8p0p2pva" path="res://assets/tileset/ui_1.png" id="3_7eo1m"]
-[ext_resource type="Texture2D" uid="uid://ypqit6hfpupx" path="res://assets/tileset/ui_2.png" id="4_1o5mh"]
+[ext_resource type="FontFile" uid="uid://b2gpejxs3yk6e" path="res://assets/fonts/Jersey15-Regular.ttf" id="3_2spmw"]
+[ext_resource type="Texture2D" uid="uid://dm4a4ep32n2ar" path="res://assets/tileset/ui_5.png" id="4_a0jxd"]
+[ext_resource type="Texture2D" uid="uid://cnw1v1jwisoji" path="res://assets/tileset/ui_7.png" id="5_2spmw"]
+[ext_resource type="Theme" uid="uid://bf4m46ofyeddt" path="res://scene/ui/equipment.tres" id="5_upqen"]
+[ext_resource type="Texture2D" uid="uid://pijf27vpe2jd" path="res://assets/tileset/ui_6.png" id="6_upqen"]
+[ext_resource type="Texture2D" uid="uid://dhbqogwwkmo85" path="res://assets/tileset/ui_9.png" id="9_ic56o"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2spmw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wie6i"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a0jxd"]
 
@@ -15,7 +21,9 @@ content_margin_left = 50.0
 content_margin_top = 10.0
 content_margin_right = 50.0
 content_margin_bottom = 10.0
-texture = ExtResource("3_7eo1m")
+texture = ExtResource("5_2spmw")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ic56o"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_upqen"]
 content_margin_left = 50.0
@@ -24,7 +32,11 @@ content_margin_right = 50.0
 content_margin_bottom = 10.0
 
 [sub_resource type="Theme" id="Theme_1o5mh"]
+TabContainer/font_sizes/font_size = 18
+TabContainer/fonts/font = ExtResource("2_q2pwm")
 TabContainer/styles/panel = SubResource("StyleBoxEmpty_a0jxd")
+TabContainer/styles/tab_focus = SubResource("StyleBoxTexture_2spmw")
+TabContainer/styles/tab_hovered = SubResource("StyleBoxEmpty_ic56o")
 TabContainer/styles/tab_selected = SubResource("StyleBoxTexture_2spmw")
 TabContainer/styles/tab_unselected = SubResource("StyleBoxEmpty_upqen")
 
@@ -45,11 +57,12 @@ texture = ExtResource("1_gw7vi")
 layout_mode = 0
 offset_left = 19.0
 offset_top = 15.0
-offset_right = 110.0
-offset_bottom = 38.0
-theme_override_fonts/font = ExtResource("2_q2pwm")
-theme_override_font_sizes/font_size = 32
-text = "EQUIPMENT:"
+offset_right = 506.0
+offset_bottom = 65.0
+scale = Vector2(1, 1.3)
+theme_override_fonts/font = ExtResource("3_2spmw")
+theme_override_font_sizes/font_size = 41
+text = "Equip and use different items...."
 
 [node name="Panel" type="Panel" parent="."]
 offset_left = 8.0
@@ -65,49 +78,314 @@ offset_top = 11.0
 offset_right = 442.0
 offset_bottom = 736.0
 scale = Vector2(1, 0.8)
-texture = ExtResource("3_7eo1m")
+texture = ExtResource("4_a0jxd")
 
-[node name="TabContainer" type="TabContainer" parent="."]
-offset_left = 455.0
-offset_top = 46.0
-offset_right = 1146.0
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 31.0
+offset_right = 420.0
+offset_bottom = 79.0
+theme = ExtResource("5_upqen")
+text = "PR-ATK:"
+
+[node name="Label2" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 85.0
+offset_right = 420.0
+offset_bottom = 133.0
+theme = ExtResource("5_upqen")
+theme_override_colors/font_color = Color(0.909437, 0.603457, 0.575419, 1)
+text = "SC-ATK:"
+
+[node name="Label3" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 139.0
+offset_right = 420.0
+offset_bottom = 187.0
+theme = ExtResource("5_upqen")
+theme_override_colors/font_color = Color(0.522277, 0.677125, 1, 1)
+text = "DEF:"
+
+[node name="Label4" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 194.0
+offset_right = 420.0
+offset_bottom = 242.0
+theme = ExtResource("5_upqen")
+theme_override_colors/font_color = Color(0.582145, 0.955765, 7.70092e-07, 1)
+text = "SPD:"
+
+[node name="current_atk" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 152.0
+offset_top = 36.0
+offset_right = 192.0
+offset_bottom = 84.0
+theme_override_fonts/font = ExtResource("3_2spmw")
+theme_override_font_sizes/font_size = 37
+
+[node name="current_sc_atk" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 152.0
+offset_top = 90.0
+offset_right = 192.0
+offset_bottom = 138.0
+theme_override_fonts/font = ExtResource("3_2spmw")
+theme_override_font_sizes/font_size = 37
+text = "76"
+
+[node name="current_def" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 101.0
+offset_top = 144.0
+offset_right = 141.0
+offset_bottom = 192.0
+theme_override_fonts/font = ExtResource("3_2spmw")
+theme_override_font_sizes/font_size = 37
+text = "76"
+
+[node name="current_spd" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 199.0
+offset_right = 145.0
+offset_bottom = 247.0
+theme_override_fonts/font = ExtResource("3_2spmw")
+theme_override_font_sizes/font_size = 37
+text = "76"
+
+[node name="ColorRect3" type="ColorRect" parent="Panel"]
+layout_mode = 0
+offset_left = 219.0
+offset_top = 278.0
+offset_right = 220.0
+offset_bottom = 380.0
+
+[node name="Label5" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 65.0
+offset_top = 381.0
+offset_right = 159.0
+offset_bottom = 411.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_q2pwm")
+theme_override_font_sizes/font_size = 24
+text = "Primary"
+
+[node name="Label6" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 265.0
+offset_top = 381.0
+offset_right = 391.0
+offset_bottom = 411.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_q2pwm")
+theme_override_font_sizes/font_size = 24
+text = "Secondary"
+
+[node name="primary" type="TextureRect" parent="Panel"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 287.0
+offset_right = 207.0
+offset_bottom = 375.0
+
+[node name="secondary" type="TextureRect" parent="Panel"]
+layout_mode = 0
+offset_left = 237.0
+offset_top = 287.0
+offset_right = 418.0
+offset_bottom = 375.0
+
+[node name="ColorRect4" type="ColorRect" parent="Panel"]
+layout_mode = 0
+offset_left = 219.0
+offset_top = 434.0
+offset_right = 220.0
+offset_bottom = 536.0
+
+[node name="Label7" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 70.0
+offset_top = 537.0
+offset_right = 164.0
+offset_bottom = 567.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_q2pwm")
+theme_override_font_sizes/font_size = 24
+text = "Armor"
+
+[node name="Label8" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 302.0
+offset_top = 537.0
+offset_right = 428.0
+offset_bottom = 567.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_q2pwm")
+theme_override_font_sizes/font_size = 24
+text = "Util"
+
+[node name="armor" type="TextureRect" parent="Panel"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 443.0
+offset_right = 207.0
+offset_bottom = 531.0
+
+[node name="util" type="TextureRect" parent="Panel"]
+layout_mode = 0
+offset_left = 237.0
+offset_top = 443.0
+offset_right = 418.0
+offset_bottom = 531.0
+
+[node name="Panel2" type="Panel" parent="."]
+offset_left = 458.0
+offset_top = 55.0
+offset_right = 1134.0
 offset_bottom = 640.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_wie6i")
+
+[node name="TabContainer" type="TabContainer" parent="Panel2"]
+layout_mode = 0
+offset_left = -3.0
+offset_top = 1.0
+offset_right = 688.0
+offset_bottom = 582.0
 theme = SubResource("Theme_1o5mh")
 tab_alignment = 1
 current_tab = 0
+tabs_position = 1
 
-[node name="PRIMARY" type="TabBar" parent="TabContainer"]
+[node name="PRIMARY" type="TabBar" parent="Panel2/TabContainer"]
 layout_mode = 2
 focus_neighbor_left = NodePath("../UTILS")
 focus_neighbor_right = NodePath("../SECONDARY")
 metadata/_tab_index = 0
 
-[node name="TextureRect" type="TextureRect" parent="TabContainer/PRIMARY"]
+[node name="TextureRect" type="TextureRect" parent="Panel2/TabContainer/PRIMARY"]
 layout_mode = 0
 offset_left = 7.0
-offset_top = 11.0
-offset_right = 1132.0
-offset_bottom = 674.0
+offset_top = 76.0
+offset_right = 673.0
+offset_bottom = 648.0
 scale = Vector2(1, 0.8)
-texture = ExtResource("4_1o5mh")
+texture = ExtResource("6_upqen")
 
-[node name="SECONDARY" type="TabBar" parent="TabContainer"]
+[node name="TextureRect2" type="TextureRect" parent="Panel2/TabContainer/PRIMARY"]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 673.0
+offset_bottom = 72.0
+texture = ExtResource("9_ic56o")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel2/TabContainer/PRIMARY"]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 86.0
+offset_right = 663.0
+offset_bottom = 522.0
+
+[node name="SECONDARY" type="TabBar" parent="Panel2/TabContainer"]
 visible = false
 layout_mode = 2
 focus_neighbor_left = NodePath("../PRIMARY")
 focus_neighbor_right = NodePath("../ARMOR")
 metadata/_tab_index = 1
 
-[node name="ARMOR" type="TabBar" parent="TabContainer"]
+[node name="TextureRect" type="TextureRect" parent="Panel2/TabContainer/SECONDARY"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 76.0
+offset_right = 673.0
+offset_bottom = 648.0
+scale = Vector2(1, 0.8)
+texture = ExtResource("6_upqen")
+
+[node name="TextureRect2" type="TextureRect" parent="Panel2/TabContainer/SECONDARY"]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 673.0
+offset_bottom = 72.0
+texture = ExtResource("9_ic56o")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel2/TabContainer/SECONDARY"]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 86.0
+offset_right = 663.0
+offset_bottom = 522.0
+
+[node name="ARMOR" type="TabBar" parent="Panel2/TabContainer"]
 visible = false
 layout_mode = 2
 focus_neighbor_left = NodePath("../SECONDARY")
 focus_neighbor_right = NodePath("../UTILS")
 metadata/_tab_index = 2
 
-[node name="UTILS" type="TabBar" parent="TabContainer"]
+[node name="TextureRect" type="TextureRect" parent="Panel2/TabContainer/ARMOR"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 76.0
+offset_right = 673.0
+offset_bottom = 648.0
+scale = Vector2(1, 0.8)
+texture = ExtResource("6_upqen")
+
+[node name="TextureRect2" type="TextureRect" parent="Panel2/TabContainer/ARMOR"]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 673.0
+offset_bottom = 72.0
+texture = ExtResource("9_ic56o")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel2/TabContainer/ARMOR"]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 86.0
+offset_right = 663.0
+offset_bottom = 522.0
+
+[node name="UTILS" type="TabBar" parent="Panel2/TabContainer"]
 visible = false
 layout_mode = 2
 focus_neighbor_left = NodePath("../ARMOR")
 focus_neighbor_right = NodePath("../PRIMARY")
 metadata/_tab_index = 3
+
+[node name="TextureRect" type="TextureRect" parent="Panel2/TabContainer/UTILS"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 76.0
+offset_right = 673.0
+offset_bottom = 648.0
+scale = Vector2(1, 0.8)
+texture = ExtResource("6_upqen")
+
+[node name="TextureRect2" type="TextureRect" parent="Panel2/TabContainer/UTILS"]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 673.0
+offset_bottom = 72.0
+texture = ExtResource("9_ic56o")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel2/TabContainer/UTILS"]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 86.0
+offset_right = 663.0
+offset_bottom = 522.0
+
+[node name="desc" type="Label" parent="Panel2"]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 12.0
+offset_right = 657.0
+offset_bottom = 61.0
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

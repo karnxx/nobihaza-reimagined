@@ -8,15 +8,12 @@ extends CanvasLayer
 @onready var texture_rect: TextureRect = $VBoxContainer/Panel/TextureRect
 const UIBUTIN = preload("res://theme/uibutin.tres")
 
-var primary = {}
-var secondary
 
 func _ready():
 	_populate_items()
 
 func _populate_items():
 	if v_box_container_2 == null:
-		push_error("v_box_container_2 path is wrong!")
 		return
 
 	var inv = InventoryManager.inv

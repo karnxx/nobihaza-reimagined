@@ -292,3 +292,4 @@ texture = ExtResource("4_5yxf2")
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="pressed" from="inv screen all/left area/left selection area/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="inv screen all/left area/left selection area/Button2" to="." method="_on_button_2_pressed"]

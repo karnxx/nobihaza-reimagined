@@ -15,11 +15,13 @@ extends StaticBody2D
 @export var reload_time :float = 1.5
 @export var walk_speed : float
 @export var rang :int = 500
+@export var texthing : Texture
 @onready var icon: Sprite2D = $Sprite2D
 var picked = false
 func _ready() -> void:
 	if not Engine.is_editor_hint():
 		icon.texture = textur
+		
 	interact()
 
 func _process(_delta: float) -> void:
@@ -38,6 +40,7 @@ func interact():
 	
 	var gun = {
 		"name":nam,
+		"desc": desc,
 		"script": scene_path,
 		"ammo_type": ammo_type,
 		"current_ammo": current_ammo,
@@ -46,7 +49,8 @@ func interact():
 		"fire_rate": fire_rate,
 		"reload_time": reload_time,
 		"walk_speed":walk_speed,
-		"range": rang
+		"range": rang,
+		"texture": texthing
 	}
 	if InventoryManager.plr != null and picked == false:
 		InventoryManager.add_item(item)

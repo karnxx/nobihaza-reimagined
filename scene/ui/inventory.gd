@@ -29,6 +29,8 @@ func _on_visibility_changed() -> void:
 		button.grab_focus()
 
 
+func _on_button_2_pressed() -> void:
+	change_screen("equipment")
 
 func _on_button_pressed() -> void:
 	change_screen("invsyb")

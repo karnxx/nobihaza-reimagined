@@ -8,8 +8,6 @@ var max_tp = 30
 var level = 1
 var exp_target = 100 * level^2
 var current_exp = 0
-var primary_gun
-var secondary
 var is_moving = false
 var facing : String = "left"
 var sprite_node_tween : Tween
@@ -20,6 +18,24 @@ var anim = ""
 var is_equipped = false
 var is_equipping = false  
 var is_shooting= false
+var can_shoot :=true
+
+#the gun stuff v imp
+var primary_gun
+var secondary_gun
+var armor
+var utils
+var ammo_type
+var current_ammo :int
+var max_ammo:int
+var fire_rate:float
+var reload_time:float
+var defense:int = 0
+var current_pr_damage:int = 0
+var current_sc_damage:int = 0
+
+
+
 
 func _ready() -> void:
 	InventoryManager.set_player(self)
@@ -31,15 +47,18 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("inv") and is_equipped == false:
 		show_inv()
 	if Input.is_action_just_pressed("equip"):
-		primary_gun = InventoryManager.gun_inv[0]
 		equip()
 	if Input.is_action_just_pressed("ui_accept") and is_equipped == true:
 		shoot()
+	if primary_gun:
+		current_pr_damage = primary_gun['damage']
+	if secondary_gun != null:
+		current_sc_damage = secondary_gun['damage']
 
 func _physics_process(_delta: float) -> void:
 	if !InventoryManager.freeze:
 		movement()
-
+		
 func animatee(animation: String, flip: bool) -> void:
 	$AnimatedSprite2D.play(animation)
 	$AnimatedSprite2D.flip_h = flip
@@ -95,11 +114,10 @@ func move(dir: Vector2) -> bool:
 		sprite_node_tween.kill()
 	
 	sprite_node_tween = create_tween()
-	sprite_node_tween.tween_property(self, "position", target_pos, duration)\
-		.set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
+	sprite_node_tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
+	sprite_node_tween.tween_property(self, "position", target_pos, duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	sprite_node_tween.finished.connect(move_finish)
 	return true
-
 	
 func move_finish() -> void:
 	position = target_pos.snapped(Vector2.ONE)
@@ -150,6 +168,12 @@ func equip() -> void:
 	if is_equipped:
 		anim = primary_gun["name"] + "_"
 		speed = primary_gun["walk_speed"] * tile_size
+		ammo_type = primary_gun["ammo_type"]
+		current_ammo = primary_gun["current_ammo"]
+		max_ammo = primary_gun["max_ammo"]
+		fire_rate = primary_gun["fire_rate"]
+		reload_time = primary_gun["reload_time"]
+		current_pr_damage = primary_gun["damage"]
 		if facing == "right":
 			$AnimatedSprite2D.play(primary_gun["name"] + "_equip_side")
 			$AnimatedSprite2D.flip_h = true
@@ -185,10 +209,11 @@ func equip() -> void:
 		is_equipping = false
 
 func shoot():
-	if is_equipped == true:
+	if is_equipped == true and can_shoot:
 		is_shooting = true
+		can_shoot = false
 		var guncrip = primary_gun["script"].new()
-		guncrip.shoot(primary_gun, self)
+		guncrip.shoot(current_pr_damage, self)
 		if facing == "right":
 			$AnimatedSprite2D.play(primary_gun["name"] + "_shoot_side")
 			$AnimatedSprite2D.flip_h = true
@@ -204,13 +229,14 @@ func shoot():
 		flash_screen()
 		await $AnimatedSprite2D.animation_finished
 		is_shooting = false
-		
-		
+		await get_tree().create_timer(fire_rate).timeout
+		can_shoot = true
+
+
 func flash_screen():
 	var flash_instance = SCREEN_FLASH.instantiate()
 	get_node("camera").add_child(flash_instance)
 	var tasdasd = Timer.new()
-
 	tasdasd.wait_time = 0.05
 	tasdasd.one_shot = true
 	tasdasd.connect("timeout", Callable(flash_instance, "queue_free"))
