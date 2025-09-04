@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://suxkid5wirl7"]
+[gd_scene load_steps=11 format=3 uid="uid://suxkid5wirl7"]
 
 [ext_resource type="Script" uid="uid://bytmry1u22m57" path="res://scene/ui/inventory.gd" id="1_4e3ot"]
 [ext_resource type="Texture2D" uid="uid://dpiai8p0p2pva" path="res://assets/tileset/ui_1.png" id="1_tp23u"]
@@ -6,6 +6,7 @@
 [ext_resource type="FontFile" uid="uid://dsix43ph6yvjm" path="res://assets/fonts/PixelifySans-VariableFont_wght.ttf" id="3_jgsnw"]
 [ext_resource type="Texture2D" uid="uid://ypqit6hfpupx" path="res://assets/tileset/ui_2.png" id="3_mtuum"]
 [ext_resource type="Texture2D" uid="uid://cgsfenpvjdu1u" path="res://assets/player/nobita1.png" id="4_5yxf2"]
+[ext_resource type="FontFile" uid="uid://b2gpejxs3yk6e" path="res://assets/fonts/Jersey15-Regular.ttf" id="7_7saj3"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tp23u"]
 
@@ -31,7 +32,7 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_tp23u")
 [node name="TextureRect" type="TextureRect" parent="inv screen all/left area"]
 layout_mode = 2
 offset_right = 285.0
-offset_bottom = 395.0
+offset_bottom = 476.0
 scale = Vector2(1, 0.66)
 texture = ExtResource("1_tp23u")
 
@@ -62,6 +63,13 @@ text = "Skills
 alignment = 0
 
 [node name="Button4" type="Button" parent="inv screen all/left area/left selection area"]
+layout_mode = 2
+theme = ExtResource("2_mtuum")
+text = "Status
+"
+alignment = 0
+
+[node name="Button6" type="Button" parent="inv screen all/left area/left selection area"]
 layout_mode = 2
 theme = ExtResource("2_mtuum")
 text = "        "
@@ -289,6 +297,34 @@ offset_top = 18.0
 offset_right = 815.0
 offset_bottom = 325.0
 texture = ExtResource("4_5yxf2")
+
+[node name="Label" type="Label" parent="inv screen all/riight"]
+layout_mode = 0
+offset_left = 234.0
+offset_top = 350.0
+offset_right = 307.0
+offset_bottom = 379.0
+theme_override_fonts/font = ExtResource("7_7saj3")
+theme_override_font_sizes/font_size = 28
+text = "Quests"
+
+[node name="Label2" type="Label" parent="inv screen all/riight"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 383.0
+offset_right = 443.0
+offset_bottom = 412.0
+theme_override_fonts/font = ExtResource("7_7saj3")
+theme_override_font_sizes/font_size = 28
+text = "-Quest system WIP, For now just explore, and
+equipment system, zombies, inventory, door 
+and key, player, etc systems work.."
+
+[node name="ColorRect3" type="ColorRect" parent="inv screen all/riight"]
+offset_left = 500.0
+offset_top = 364.0
+offset_right = 502.0
+offset_bottom = 596.0
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="pressed" from="inv screen all/left area/left selection area/Button" to="." method="_on_button_pressed"]

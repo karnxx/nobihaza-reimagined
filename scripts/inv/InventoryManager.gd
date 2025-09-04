@@ -7,7 +7,7 @@ var gun_inv = []
 var secondary_inv = []
 var armor_inv = []
 var utils_inv = []
-var plr : Node = null
+var plr = null
 
 func _ready() -> void:
 	inv.resize(30)

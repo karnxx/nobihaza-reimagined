@@ -5,6 +5,8 @@ extends CanvasLayer
 @onready var tp: Label = $"inv screen all/riight/Button/Panel/tp"
 @onready var xp: Label = $"inv screen all/riight/Button/Panel/exp"
 @onready var status: Label = $"inv screen all/riight/Button/Panel/status"
+@onready var primary: TextureRect = $"inv screen all/riight/Button/Panel/primary"
+@onready var secondary: TextureRect = $"inv screen all/riight/Button/Panel/secondary"
 
 var current_healt 
 var max_healt 
@@ -23,10 +25,16 @@ func _process(_delta: float) -> void:
 	hp.text = str(current_healt) + "/" + str(max_healt)
 	tp.text = str(t) + "/" + str(max_t)
 	xp.text = str(current_ex) + "/" + str(exp_targe)
-
+	if get_parent().get_parent().primary_gun !=null:
+		primary.texture = get_parent().get_parent().primary_gun['texture']
+	if get_parent().get_parent().secondary_gun !=null:
+		secondary.texture = get_parent().get_parent().secondary_gun['texture']
+	
 func _on_visibility_changed() -> void:
-	if button and button.is_inside_tree():
-		button.grab_focus()
+	if visible:
+		await get_tree().process_frame
+		if button and button.is_inside_tree():
+			button.grab_focus()
 
 
 func _on_button_2_pressed() -> void:

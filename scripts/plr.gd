@@ -1,25 +1,19 @@
 extends CharacterBody2D
 #dialogue-https://www.youtube.com/watch?v=Tmy1tzhDLl4
 const SCREEN_FLASH = preload("res://scene/ui/screen_flash.tscn")
-var current_health = 100
-var max_health = 100
-var tp = 30
-var max_tp = 30
-var level = 1
-var exp_target = 100 * level^2
-var current_exp = 0
-var is_moving = false
-var facing : String = "left"
+var current_exp := 0
+var is_moving := false
+var facing := "left"
 var sprite_node_tween : Tween
 var target_pos :Vector2
-var tile_size = 16
-var speed = tile_size * 6
-var anim = ""
-var is_equipped = false
-var is_equipping = false  
-var is_shooting= false
+var tile_size := 16
+var anim := ""
+var is_equipped := false
+var is_equipping := false  
+var is_shooting:= false
+var is_dmging = false
 var can_shoot :=true
-
+var grabbed := false
 #the gun stuff v imp
 var primary_gun
 var secondary_gun
@@ -33,15 +27,24 @@ var reload_time:float
 var defense:int = 0
 var current_pr_damage:int = 0
 var current_sc_damage:int = 0
+var status :String = "normal"
+var speed = tile_size * 6
+var current_health := 100
+var max_health := 100
+var tp := 30
+var max_tp := 30
+var level := 1
+var exp_target := 100 * level^2
 
-
+var grab_target = 0
+var current_prg = 0
 
 
 func _ready() -> void:
 	InventoryManager.set_player(self)
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if !InventoryManager.freeze:
 		check_interactable()
 	if Input.is_action_just_pressed("inv") and is_equipped == false:
@@ -54,7 +57,15 @@ func _process(_delta: float) -> void:
 		current_pr_damage = primary_gun['damage']
 	if secondary_gun != null:
 		current_sc_damage = secondary_gun['damage']
-
+	grab_escape()
+	if Input.is_action_pressed("ui_up") :
+		facing = "up"
+	elif Input.is_action_pressed("ui_down") :
+		facing = "down"
+	elif Input.is_action_pressed("ui_left") :
+		facing = "left"
+	elif Input.is_action_pressed("ui_right") :
+		facing = "right"
 func _physics_process(_delta: float) -> void:
 	if !InventoryManager.freeze:
 		movement()
@@ -64,7 +75,7 @@ func animatee(animation: String, flip: bool) -> void:
 	$AnimatedSprite2D.flip_h = flip
 
 func movement() -> void:
-	if (sprite_node_tween and sprite_node_tween.is_running()) or is_equipping or is_shooting:
+	if (sprite_node_tween and sprite_node_tween.is_running()) or is_equipping or is_shooting or is_dmging:
 		return
 
 	var dir := Vector2.ZERO
@@ -106,6 +117,10 @@ func movement() -> void:
 func move(dir: Vector2) -> bool:
 	if is_moving:
 		return false  
+	if grabbed:
+		return false
+	if is_dmging:
+		return false
 	is_moving = true
 	target_pos = position + dir * tile_size
 	var distance := position.distance_to(target_pos)
@@ -115,7 +130,7 @@ func move(dir: Vector2) -> bool:
 	
 	sprite_node_tween = create_tween()
 	sprite_node_tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
-	sprite_node_tween.tween_property(self, "position", target_pos, duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	sprite_node_tween.tween_property(self, "global_position", target_pos, duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	sprite_node_tween.finished.connect(move_finish)
 	return true
 	
@@ -157,56 +172,57 @@ func show_inv():
 		InventoryManager.freeze = false
 
 func equip() -> void:
-	is_equipping = true
-	is_equipped = !is_equipped
-	
-	$aim/down.target_position = Vector2(0, primary_gun["range"])
-	$aim/up.target_position = Vector2(0, -primary_gun["range"])
-	$aim/left.target_position = Vector2(-primary_gun["range"], 0)
-	$aim/right.target_position = Vector2(primary_gun["range"], 0)
-	
-	if is_equipped:
-		anim = primary_gun["name"] + "_"
-		speed = primary_gun["walk_speed"] * tile_size
-		ammo_type = primary_gun["ammo_type"]
-		current_ammo = primary_gun["current_ammo"]
-		max_ammo = primary_gun["max_ammo"]
-		fire_rate = primary_gun["fire_rate"]
-		reload_time = primary_gun["reload_time"]
-		current_pr_damage = primary_gun["damage"]
-		if facing == "right":
-			$AnimatedSprite2D.play(primary_gun["name"] + "_equip_side")
-			$AnimatedSprite2D.flip_h = true
-		elif facing == "left":
-			$AnimatedSprite2D.play(primary_gun["name"] + "_equip_side")
-			$AnimatedSprite2D.flip_h = false
-		elif facing == "up":
-			$AnimatedSprite2D.play(primary_gun["name"] + "_equip_back")
-			$AnimatedSprite2D.flip_h = false
-		elif facing == "down":
-			$AnimatedSprite2D.play(primary_gun["name"] + "_equip_front")
-			$AnimatedSprite2D.flip_h = false
+	if primary_gun != null:
+		is_equipping = true
+		is_equipped = !is_equipped
+		if primary_gun != null:
+			$aim/down.target_position = Vector2(0, primary_gun["range"])
+			$aim/up.target_position = Vector2(0, -primary_gun["range"])
+			$aim/left.target_position = Vector2(-primary_gun["range"], 0)
+			$aim/right.target_position = Vector2(primary_gun["range"], 0)
+		
+		if is_equipped:
+			anim = primary_gun["name"] + "_"
+			speed = primary_gun["walk_speed"] * tile_size
+			ammo_type = primary_gun["ammo_type"]
+			current_ammo = primary_gun["current_ammo"]
+			max_ammo = primary_gun["max_ammo"]
+			fire_rate = primary_gun["fire_rate"]
+			reload_time = primary_gun["reload_time"]
+			current_pr_damage = primary_gun["damage"]
+			if facing == "right":
+				$AnimatedSprite2D.play(primary_gun["name"] + "_equip_side")
+				$AnimatedSprite2D.flip_h = true
+			elif facing == "left":
+				$AnimatedSprite2D.play(primary_gun["name"] + "_equip_side")
+				$AnimatedSprite2D.flip_h = false
+			elif facing == "up":
+				$AnimatedSprite2D.play(primary_gun["name"] + "_equip_back")
+				$AnimatedSprite2D.flip_h = false
+			elif facing == "down":
+				$AnimatedSprite2D.play(primary_gun["name"] + "_equip_front")
+				$AnimatedSprite2D.flip_h = false
 
-		await $AnimatedSprite2D.animation_finished
-		is_equipping = false
-	else:
-		anim = ""
-		speed = tile_size * 6
-		if facing == "right":
-			$AnimatedSprite2D.play_backwards(primary_gun["name"] + "_equip_side")
-			$AnimatedSprite2D.flip_h = true
-		elif facing == "left":
-			$AnimatedSprite2D.play_backwards(primary_gun["name"] + "_equip_side")
-			$AnimatedSprite2D.flip_h = false
-		elif facing == "up":
-			$AnimatedSprite2D.play_backwards(primary_gun["name"] + "_equip_back")
-			$AnimatedSprite2D.flip_h = false
-		elif facing == "down":
-			$AnimatedSprite2D.play_backwards(primary_gun["name"] + "_equip_front")
-			$AnimatedSprite2D.flip_h = false
+			await $AnimatedSprite2D.animation_finished
+			is_equipping = false
+		else:
+			anim = ""
+			speed = tile_size * 6
+			if facing == "right":
+				$AnimatedSprite2D.play_backwards(primary_gun["name"] + "_equip_side")
+				$AnimatedSprite2D.flip_h = true
+			elif facing == "left":
+				$AnimatedSprite2D.play_backwards(primary_gun["name"] + "_equip_side")
+				$AnimatedSprite2D.flip_h = false
+			elif facing == "up":
+				$AnimatedSprite2D.play_backwards(primary_gun["name"] + "_equip_back")
+				$AnimatedSprite2D.flip_h = false
+			elif facing == "down":
+				$AnimatedSprite2D.play_backwards(primary_gun["name"] + "_equip_front")
+				$AnimatedSprite2D.flip_h = false
 
-		await $AnimatedSprite2D.animation_finished
-		is_equipping = false
+			await $AnimatedSprite2D.animation_finished
+			is_equipping = false
 
 func shoot():
 	if is_equipped == true and can_shoot:
@@ -252,3 +268,48 @@ func get_rayray():
 		return $aim/right
 	elif facing == "left":
 		return $aim/left
+
+func get_dmged(dmg):
+	current_health -= dmg
+	is_dmging = true
+	if facing == "left":
+		$AnimatedSprite2D.play("attacked_side")
+		$AnimatedSprite2D.flip_h = true
+	elif facing == "right":
+		$AnimatedSprite2D.play("attacked_side")
+		$AnimatedSprite2D.flip_h = false
+	elif facing == "up":
+		$AnimatedSprite2D.play("attacked_back")
+		$AnimatedSprite2D.flip_h = false
+	elif facing == "down":
+		$AnimatedSprite2D.play("attacked_front")
+		$AnimatedSprite2D.flip_h = false
+	await $AnimatedSprite2D.animation_finished
+	is_dmging = false
+	print(current_health)
+
+func start_grab(target, time):
+	grabbed = true
+	grab_target = target
+	$timers/escape.wait_time = time
+	$timers/escape.start()
+	print("grab started")
+
+func grab_escape():
+	if grabbed:
+		if facing == "left":
+			pass
+		if Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("ui_down") or Input.is_action_just_pressed("ui_left") or Input.is_action_just_pressed("ui_right"):
+			current_prg += 5
+			print(grab_target)
+			print(current_prg)
+		if current_prg >= grab_target:
+			grabbed = false
+			current_prg = 0
+			print("escaped via spam")
+
+func _on_escape_timeout() -> void:
+	if grabbed:
+		grabbed = false
+		current_prg = 0
+		print("escaped via timer")

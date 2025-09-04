@@ -33,8 +33,8 @@ func _populate_items():
 		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		btn.theme = UIBUTIN
 
-		btn.focus_entered.connect(_on_item_focused.bind(i))
-		btn.pressed.connect(_on_item_pressed.bind(i))
+		btn.focus_entered.connect(item_focus.bind(i))
+		btn.pressed.connect(item_press.bind(i))
 
 		v_box_container_2.add_child(btn)
 		if first_btn == null:
@@ -52,7 +52,7 @@ func _process(_delta: float) -> void:
 		InventoryManager.freeze = true
 
 
-func _on_item_focused(index):
+func item_focus(index):
 	var inv = InventoryManager.inv 
 	if index >= inv.size() or inv[index] == null:
 		return
@@ -64,7 +64,7 @@ func _on_item_focused(index):
 	texture_rect.texture = item["texture"]
 
 
-func _on_item_pressed(index):
+func item_press(index):
 	var inv = InventoryManager.inv
 	var item = inv[index]
 	print("Pressed: %s" % item["name"])  

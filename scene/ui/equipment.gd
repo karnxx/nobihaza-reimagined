@@ -13,7 +13,7 @@ extends CanvasLayer
 const UIBUTIN = preload("res://theme/uibutin.tres")
 
 var plr
-var in_tab_mode: bool = true
+var in_tab_mode: = true
 
 func _ready():
 	plr = get_parent().get_parent()
@@ -23,6 +23,8 @@ func _ready():
 	upd_stat()
 
 func _input(event: InputEvent):
+	if not visible:
+		return
 	if in_tab_mode:
 		if event.is_action_pressed("ui_left"):
 			tab_container.current_tab = max(tab_container.current_tab - 1, 0)
@@ -87,7 +89,7 @@ func gen_butin(tab: TabBar):
 		btn.text = str(item.get("name", "Unknown"))
 		btn.focus_mode = Control.FOCUS_ALL
 		btn.connect("focus_entered", Callable(self, "on_focus").bind(item, tab.name))
-		btn.connect("pressed", Callable(self, "on_select").bind(item, tab.name)) # ✅ fixed
+		btn.connect("pressed", Callable(self, "on_select").bind(item, tab.name))
 		vbox.add_child(btn)
 
 	setup_button(vbox)
@@ -177,6 +179,22 @@ func upd_stat():
 		textuare_change(secondary, plr.secondary_gun)
 		textuare_change(armor, plr.armor)
 		textuare_change(util, plr.utils)
+
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("inv"):
+		if visible:
+			if not in_tab_mode:
+				tab_container.get_current_tab_control().grab_focus()
+				in_tab_mode = true
+				get_parent().get_node("Inventory").visible = false
+				InventoryManager.freeze = true
+			else:
+				visible = false
+				get_parent().get_node("Inventory").visible = true 
+				InventoryManager.freeze = true
+
+
+
 
 func _on_visibility_changed():
 	if visible:

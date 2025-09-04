@@ -526,6 +526,7 @@ navigation_layer_0/layers = 1
 sources/0 = SubResource("TileSetAtlasSource_gjq6g")
 
 [node name="testlvl1" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_bdj6y")
 
 [node name="exaite" parent="." instance=ExtResource("2_twhkc")]
@@ -550,6 +551,7 @@ qty = 1
 position = Vector2(233, 59)
 
 [node name="camera" type="Camera2D" parent="plr"]
+position = Vector2(-77, -19)
 zoom = Vector2(3, 3)
 process_callback = 0
 limit_left = -64
@@ -557,7 +559,6 @@ limit_top = -111
 limit_right = 340
 limit_bottom = 144
 limit_smoothed = true
-position_smoothing_enabled = true
 
 [node name="Inventory" parent="plr/camera" instance=ExtResource("6_gqchy")]
 visible = false
@@ -612,7 +613,8 @@ rang = 400
 texthing = ExtResource("13_pcxri")
 
 [node name="dummy" parent="." node_paths=PackedStringArray("collision", "tilemap") instance=ExtResource("13_gjq6g")]
-position = Vector2(57, 11)
+position = Vector2(57, 43)
+dmg = 12
 collision = NodePath("../TileMap/collision")
 tilemap = NodePath("../TileMap/tiles here")
 
