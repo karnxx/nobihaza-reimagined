@@ -321,6 +321,7 @@ equipment system, zombies, inventory, door
 and key, player, etc systems work.."
 
 [node name="ColorRect3" type="ColorRect" parent="inv screen all/riight"]
+layout_mode = 0
 offset_left = 500.0
 offset_top = 364.0
 offset_right = 502.0
