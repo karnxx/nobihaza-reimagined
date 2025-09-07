@@ -98,7 +98,6 @@ func gen_butin(tab: TabBar):
 func on_focus(item, tab_name):
 	if item.has("desc"):
 		desc_label.text = item["desc"]
-
 	if tab_name == "PRIMARY":
 		var old_val = plr.current_pr_damage
 		current_atk.text = str(old_val) + " -> " + str(item.get("damage", old_val))
@@ -110,6 +109,8 @@ func on_focus(item, tab_name):
 		current_def.text = str(old_val) + " -> " + str(item.get("def", old_val))
 	elif tab_name == "UTILS":
 		print("Asd")
+	$AudioStreamPlayer.stream = preload("res://assets/music/sfc/select-button-ui-395763.mp3")
+	$AudioStreamPlayer.play()
 
 func on_select(item: Dictionary, tab_name: String) -> void:
 	if tab_name == "PRIMARY":
@@ -120,6 +121,8 @@ func on_select(item: Dictionary, tab_name: String) -> void:
 		plr.armor = item
 	elif tab_name == "UTILS":
 		plr.utils = item
+	$AudioStreamPlayer.stream = preload("res://assets/music/sfc/item-pickup-37089.mp3")
+	$AudioStreamPlayer.play()
 
 	upd_stat()
 	gen_butin(tab_container.get_current_tab_control())
@@ -203,3 +206,9 @@ func _on_visibility_changed():
 		tab_container.get_current_tab_control().grab_focus()
 		in_tab_mode = true
 	upd_stat()
+
+
+func _on_tab_container_tab_selected(tab: int) -> void:
+	if visible:
+		$AudioStreamPlayer.stream = preload("res://assets/music/sfc/select-button-ui-395763.mp3")
+		$AudioStreamPlayer.play()

@@ -1,7 +1,9 @@
-[gd_scene load_steps=75 format=3 uid="uid://hptbepafjbl3"]
+[gd_scene load_steps=77 format=3 uid="uid://hptbepafjbl3"]
 
 [ext_resource type="Script" uid="uid://djc40njafjrdy" path="res://scene/npc/zombie/dummy.gd" id="1_o1x3s"]
 [ext_resource type="Texture2D" uid="uid://b70jaer4u3odd" path="res://assets/npcs/zombie/3F3F3F%3F1.webp" id="2_vlojr"]
+[ext_resource type="Script" uid="uid://b2sxl0d0nw164" path="res://footstep.gd" id="3_pmqtb"]
+[ext_resource type="AudioStream" uid="uid://dwb3tc1lx0rij" path="res://assets/music/footstep/footsteps-male-362053-[AudioTrimmer.com] (2).mp3" id="4_mo8sx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_778kp"]
 atlas = ExtResource("2_vlojr")
@@ -632,4 +634,20 @@ collision_layer = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="plrdetec"]
 shape = SubResource("CircleShape2D_o1x3s")
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer2D" parent="."]
+bus = &"sfx"
+
+[node name="sound" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="Footstep" type="AudioStreamPlayer2D" parent="."]
+volume_db = -1.0
+pitch_scale = 0.5
+script = ExtResource("3_pmqtb")
+footsteps = Array[AudioStream]([ExtResource("4_mo8sx")])
+metadata/_custom_type_script = "uid://b2sxl0d0nw164"
+
+[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
 [connection signal="body_entered" from="plrdetec" to="." method="_on_plrdetec_body_entered"]
+[connection signal="timeout" from="sound" to="." method="_on_sound_timeout"]

@@ -1,4 +1,7 @@
 extends Node2D 
+const HORROR1 = preload("res://assets/music/dark-horror-ambience-for-mystical-scenes-179447.mp3")
+
+var current_music = [HORROR1]
 
 func _ready() -> void: 
 
@@ -9,3 +12,5 @@ func _ready() -> void:
 			$plr.global_position = spawn.global_position 
 		GameManager.next_spawn = ""
 	$walkdoor.spawnwn = "spawn1"
+	$AudioStreamPlayer.stream = current_music.pick_random()	
+	$AudioStreamPlayer.play()

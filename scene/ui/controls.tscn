@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dpe7jhfof2lqd"]
+
+[ext_resource type="FontFile" uid="uid://b2gpejxs3yk6e" path="res://assets/fonts/Jersey15-Regular.ttf" id="1_8n3b7"]
+[ext_resource type="Script" uid="uid://cyrb2ceegpwqo" path="res://scene/ui/controls.gd" id="1_w5tia"]
+
+[node name="controls" type="CanvasLayer"]
+script = ExtResource("1_w5tia")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 584.0
+offset_top = 579.0
+offset_right = 1153.0
+offset_bottom = 651.0
+theme_override_fonts/font = ExtResource("1_8n3b7")
+theme_override_font_sizes/font_size = 21
+text = "i for menu, j to equip gun, n to interact(with equipped gun it is to shoot). 
+when u press i in menu, it returns back..
+check menu for more info about this game."

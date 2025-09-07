@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bniu2466p8p52"]
+[gd_scene load_steps=4 format=3 uid="uid://bniu2466p8p52"]
 
 [ext_resource type="Script" uid="uid://bqtmm3174sw6j" path="res://scene/item/exaite.gd" id="1_brg5q"]
+[ext_resource type="AudioStream" uid="uid://2e7t200e2lxl" path="res://assets/music/sfc/item-equip-6904.mp3" id="2_brg5q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_brg5q"]
 size = Vector2(11, 11)
@@ -9,11 +10,11 @@ size = Vector2(11, 11)
 script = ExtResource("1_brg5q")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-0.0117188, -0.00390649)
-rotation = -3.14159
-scale = Vector2(0.313, 0.4)
-hframes = 4
-vframes = 5
+position = Vector2(0, -2)
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_brg5q")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_brg5q")
+bus = &"sfx"

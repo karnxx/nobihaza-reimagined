@@ -62,12 +62,16 @@ func item_focus(index):
 	qty.text = "x" + str(item["qty"])
 	effect.text = "Effect: " + item["effect"]
 	texture_rect.texture = item["texture"]
+	$AudioStreamPlayer.stream = preload("res://assets/music/sfc/select-button-ui-395763.mp3")
+	$AudioStreamPlayer.play()
 
 
 func item_press(index):
 	var inv = InventoryManager.inv
 	var item = inv[index]
 	print("Pressed: %s" % item["name"])  
+	$AudioStreamPlayer.stream = preload("res://assets/music/sfc/item-pickup-37089.mp3")
+	$AudioStreamPlayer.play()
 
 
 func _on_visibility_changed() -> void:

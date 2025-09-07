@@ -1,6 +1,10 @@
 extends CharacterBody2D
 #dialogue-https://www.youtube.com/watch?v=Tmy1tzhDLl4
 const SCREEN_FLASH = preload("res://scene/ui/screen_flash.tscn")
+const EQUIP_SOUND = preload("res://assets/music/sfc/equip-sound-272428.mp3")
+const PISTOL_COCK = preload("res://assets/music/sfc/pistol-cock-6014.mp3")
+const PISTOL_SHOOT = preload("res://assets/music/sfc/single-pistol-gunshot-32-101873.mp3")
+const PISTOL_DEQUIP = preload("res://assets/music/sfc/Screen-Recording (16) (mp3cut.net).mp3")
 var current_exp := 0
 var is_moving := false
 var facing := "left"
@@ -14,6 +18,7 @@ var is_shooting:= false
 var is_dmging = false
 var can_shoot :=true
 var grabbed := false
+
 #the gun stuff v imp
 var primary_gun
 var secondary_gun
@@ -45,6 +50,10 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	if grabbed:
+		get_node("camera/interact").visible = true
+	else:
+		get_node("camera/interact").visible = false
 	if !InventoryManager.freeze:
 		check_interactable()
 	if Input.is_action_just_pressed("inv") and is_equipped == false:
@@ -66,9 +75,11 @@ func _process(delta: float) -> void:
 		facing = "left"
 	elif Input.is_action_pressed("ui_right") :
 		facing = "right"
+			
 func _physics_process(_delta: float) -> void:
 	if !InventoryManager.freeze:
 		movement()
+
 		
 func animatee(animation: String, flip: bool) -> void:
 	$AnimatedSprite2D.play(animation)
@@ -81,7 +92,7 @@ func movement() -> void:
 	var dir := Vector2.ZERO
 	var anim_name := ""
 	var flip := false
-
+	
 	if Input.is_action_pressed("ui_up") and not $movement/up.is_colliding():
 		dir = Vector2(0, -1)
 		anim_name = "walk_back"
@@ -98,7 +109,7 @@ func movement() -> void:
 		dir = Vector2(1, 0)
 		anim_name = "walk_side"
 		flip = true
-
+	
 	else:
 		match facing:
 			"left":  animatee(anim + "idle_side", false)
@@ -115,24 +126,32 @@ func movement() -> void:
 
 	
 func move(dir: Vector2) -> bool:
-	if is_moving:
-		return false  
-	if grabbed:
+	if is_moving or grabbed or is_dmging:
 		return false
-	if is_dmging:
+
+	var current_cell: Vector2i = (global_position / tile_size).floor()
+	var target_cell: Vector2i = current_cell + Vector2i(dir)
+
+	if not GameManager.is_tile_free(target_cell):
 		return false
+
+	GameManager.release_tile(current_cell)
+	GameManager.reserve_tile(target_cell, self)
+
 	is_moving = true
 	target_pos = position + dir * tile_size
 	var distance := position.distance_to(target_pos)
 	var duration = max(0.05, distance / speed)
+
 	if sprite_node_tween and sprite_node_tween.is_running():
 		sprite_node_tween.kill()
-	
+	$footstep.playd()
 	sprite_node_tween = create_tween()
 	sprite_node_tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	sprite_node_tween.tween_property(self, "global_position", target_pos, duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	sprite_node_tween.finished.connect(move_finish)
 	return true
+
 	
 func move_finish() -> void:
 	position = target_pos.snapped(Vector2.ONE)
@@ -155,6 +174,7 @@ func check_interactable():
 		if col.has_method("interact"):
 			col.interact()
 
+
 func show_inv():
 	var inv = get_node("camera/Inventory")
 	inv.current_healt = current_health
@@ -173,6 +193,13 @@ func show_inv():
 
 func equip() -> void:
 	if primary_gun != null:
+		
+		if primary_gun['name'] == "pistol" or primary_gun['name'] == "handgun":
+			if is_equipped == false:
+				$AudioStreamPlayer.stream = PISTOL_COCK
+			elif is_equipped == true:
+				$AudioStreamPlayer.stream = PISTOL_DEQUIP
+		$AudioStreamPlayer.play()
 		is_equipping = true
 		is_equipped = !is_equipped
 		if primary_gun != null:
@@ -242,12 +269,14 @@ func shoot():
 		elif facing == "down":
 			$AnimatedSprite2D.play(primary_gun["name"] + "_shoot_front")
 			$AnimatedSprite2D.flip_h = false
+		if primary_gun['name'] == "pistol" or primary_gun['name'] == "handgun":
+			$AudioStreamPlayer.stream = PISTOL_SHOOT
+		$AudioStreamPlayer.play()
 		flash_screen()
 		await $AnimatedSprite2D.animation_finished
 		is_shooting = false
 		await get_tree().create_timer(fire_rate).timeout
 		can_shoot = true
-
 
 func flash_screen():
 	var flash_instance = SCREEN_FLASH.instantiate()
@@ -286,7 +315,10 @@ func get_dmged(dmg):
 		$AnimatedSprite2D.flip_h = false
 	await $AnimatedSprite2D.animation_finished
 	is_dmging = false
-	print(current_health)
+	$AudioStreamPlayer.stream = preload("res://assets/music/sfc/088436_hurt-1-82785.mp3")
+	$AudioStreamPlayer.play()
+	if current_health <= 0:
+		get_tree().reload_current_scene()
 
 func start_grab(target, time):
 	grabbed = true

@@ -1,6 +1,10 @@
 extends Node2D 
 var astar_grid = AStarGrid2D.new()
 @onready var tile_map: TileMap = $TileMap
+const HORROR1 = preload("res://assets/music/dark-horror-ambience-for-mystical-scenes-179447.mp3")
+
+var current_music = [HORROR1]
+
 
 func _ready() -> void: 
 
@@ -11,4 +15,5 @@ func _ready() -> void:
 		GameManager.next_spawn = ""
 
 	$door1.spawnwn = "corridor_spawn_1"
-	
+	$AudioStreamPlayer.stream = current_music.pick_random()	
+	$AudioStreamPlayer.play()

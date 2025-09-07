@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cchj5t8si7o2d"
+path="res://.godot/imported/Screen-Recording (15) (online-video-cutter.com).mp3-648012136e50bbb77ff8e309a0f0ba68.mp3str"
+
+[deps]
+
+source_file="res://assets/music/sfc/Screen-Recording (15) (online-video-cutter.com).mp3"
+dest_files=["res://.godot/imported/Screen-Recording (15) (online-video-cutter.com).mp3-648012136e50bbb77ff8e309a0f0ba68.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

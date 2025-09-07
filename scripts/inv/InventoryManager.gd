@@ -43,7 +43,6 @@ func increase_inv_total(slots):
 func add_gun(gun) -> bool:
 	gun_inv.append(gun)
 	inv_upd.emit()
-	print(gun_inv)
 	return true
 
 func remove_gun(damage) -> bool:

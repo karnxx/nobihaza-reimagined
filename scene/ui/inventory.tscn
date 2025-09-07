@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://suxkid5wirl7"]
+[gd_scene load_steps=12 format=3 uid="uid://suxkid5wirl7"]
 
 [ext_resource type="Script" uid="uid://bytmry1u22m57" path="res://scene/ui/inventory.gd" id="1_4e3ot"]
 [ext_resource type="Texture2D" uid="uid://dpiai8p0p2pva" path="res://assets/tileset/ui_1.png" id="1_tp23u"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://ypqit6hfpupx" path="res://assets/tileset/ui_2.png" id="3_mtuum"]
 [ext_resource type="Texture2D" uid="uid://cgsfenpvjdu1u" path="res://assets/player/nobita1.png" id="4_5yxf2"]
 [ext_resource type="FontFile" uid="uid://b2gpejxs3yk6e" path="res://assets/fonts/Jersey15-Regular.ttf" id="7_7saj3"]
+[ext_resource type="AudioStream" uid="uid://c7qpnivbu66cv" path="res://assets/music/sfc/inventory-grab-36275.mp3" id="8_kbp00"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tp23u"]
 
@@ -327,6 +328,17 @@ offset_top = 364.0
 offset_right = 502.0
 offset_bottom = 596.0
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_kbp00")
+bus = &"sfx"
+
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="focus_entered" from="inv screen all/left area/left selection area/Button" to="." method="_on_button_focus_entered"]
 [connection signal="pressed" from="inv screen all/left area/left selection area/Button" to="." method="_on_button_pressed"]
+[connection signal="focus_entered" from="inv screen all/left area/left selection area/Button2" to="." method="_on_button_2_focus_entered"]
 [connection signal="pressed" from="inv screen all/left area/left selection area/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="focus_entered" from="inv screen all/left area/left selection area/Button3" to="." method="_on_button_3_focus_entered"]
+[connection signal="pressed" from="inv screen all/left area/left selection area/Button3" to="." method="_on_button_3_pressed"]
+[connection signal="focus_entered" from="inv screen all/left area/left selection area/Button4" to="." method="_on_button_4_focus_entered"]
+[connection signal="focus_entered" from="inv screen all/left area/left selection area/Button6" to="." method="_on_button_6_focus_entered"]
+[connection signal="focus_entered" from="inv screen all/left area/left selection area/Button5" to="." method="_on_button_5_focus_entered"]

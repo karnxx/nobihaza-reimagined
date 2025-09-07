@@ -17,12 +17,11 @@ extends StaticBody2D
 @export var rang :int = 500
 @export var texthing : Texture
 @onready var icon: Sprite2D = $Sprite2D
-var picked = false
+
 func _ready() -> void:
 	if not Engine.is_editor_hint():
 		icon.texture = textur
-		
-	interact()
+
 
 func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
@@ -52,8 +51,12 @@ func interact():
 		"range": rang,
 		"texture": texthing
 	}
-	if InventoryManager.plr != null and picked == false:
+	if InventoryManager.plr != null:
 		InventoryManager.add_item(item)
 		InventoryManager.add_gun(gun)
-		picked = true
+		$CollisionShape2D.disabled = true
+		visible = false 
+		$AudioStreamPlayer2D.play()
+		await $AudioStreamPlayer2D.finished
 		self.queue_free()
+		
