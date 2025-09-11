@@ -954,11 +954,11 @@ wait_time = 3.0
 one_shot = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-bus = &"sfx"
 
 [node name="footstep" type="AudioStreamPlayer2D" parent="."]
 script = ExtResource("3_1awnj")
 footsteps = Array[AudioStream]([ExtResource("4_1awnj")])
 metadata/_custom_type_script = "uid://b2sxl0d0nw164"
 
+[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
 [connection signal="timeout" from="timers/escape" to="." method="_on_escape_timeout"]

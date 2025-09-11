@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="DialogicStyle" load_steps=5 format=3 uid="uid://dtl1ki0ssh24y"]
+
+[ext_resource type="Script" uid="uid://tl42103h1oxc" path="res://addons/dialogic/Resources/dialogic_style_layer.gd" id="1_d3wt2"]
+[ext_resource type="PackedScene" uid="uid://dht5apj45fs1a" path="res://dialogue/styke/CustomNormal/custom_normal.tscn" id="1_xcrr5"]
+[ext_resource type="Script" uid="uid://dpwkakood52dh" path="res://addons/dialogic/Resources/dialogic_style.gd" id="9_b4m7k"]
+
+[sub_resource type="Resource" id="Resource_mymfr"]
+script = ExtResource("1_d3wt2")
+scene = ExtResource("1_xcrr5")
+overrides = {}
+
+[resource]
+script = ExtResource("9_b4m7k")
+name = "normal"
+layer_list = Array[String]([])
+layer_info = {
+"": SubResource("Resource_mymfr")
+}
+base_overrides = {}
+layers = Array[ExtResource("1_d3wt2")]([])
+metadata/_latest_layer = ""

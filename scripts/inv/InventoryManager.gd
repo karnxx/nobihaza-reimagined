@@ -1,23 +1,40 @@
 extends Node
 
 signal inv_upd
+
 var freeze = false
+
 var inv = []
 var gun_inv = []
 var secondary_inv = []
 var armor_inv = []
 var utils_inv = []
+var primary_gun = null
+var secondary_gun = null
+var armor = null
+var utils = null
+
 var plr = null
 
 func _ready() -> void:
 	inv.resize(30)
+
+func set_player(player):
+	plr = player
+	if primary_gun:
+		plr.primary_gun = primary_gun
+	if secondary_gun:
+		plr.secondary_gun = secondary_gun
+	if armor:
+		plr.armor = armor
+	if utils:
+		plr.utils = utils
 
 func add_item(item):
 	for i in range(inv.size()):
 		if inv[i] != null and inv[i]["type"] == item["type"] and inv[i]["effect"] == item["effect"]:
 			inv[i]["qty"] += item["qty"]
 			inv_upd.emit()
-			print("Stacked:", inv[i])
 			return true
 	for i in range(inv.size()):
 		if inv[i] == null:
@@ -53,5 +70,28 @@ func remove_gun(damage) -> bool:
 			return true
 	return false
 
-func set_player(player):
-	plr = player
+func save_inv():
+	if plr:
+		primary_gun = plr.primary_gun
+		secondary_gun = plr.secondary_gun
+		armor = plr.armor
+		utils = plr.utils
+	
+	inv = inv.duplicate(true)
+	gun_inv = gun_inv.duplicate(true)
+	secondary_inv = secondary_inv.duplicate(true)
+	armor_inv = armor_inv.duplicate(true)
+	utils_inv = utils_inv.duplicate(true)
+
+func load_inv():
+	inv = inv.duplicate(true)
+	gun_inv = gun_inv.duplicate(true)
+	secondary_inv = secondary_inv.duplicate(true)
+	armor_inv = armor_inv.duplicate(true)
+	utils_inv = utils_inv.duplicate(true)
+	
+	if plr:
+		plr.primary_gun = primary_gun
+		plr.secondary_gun = secondary_gun
+		plr.armor = armor
+		plr.utils = utils

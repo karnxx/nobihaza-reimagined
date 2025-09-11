@@ -1,0 +1,12 @@
+[signal arg="start_diag"]
+Gian (gian/gian_normal): NOBITA!
+Gian (gian/gian_normal): LET’S PLAY BASEBALL!
+nobita (nobita/nobita_painful_eyes): Uh… actually, I was just about to read my manga…
+Gian (gian/gian_evil): Did I ask if you had a choice?
+[sound path="res://assets/music/sfc/waa.ogg" volume="6.0" bus="Master"]
+nobita (nobita/nobita_painful_eyes_cry): UWAAAA!! Why is it always me?!
+Gian (gian/gian_evil): Fine. Meet me after school
+nobita (nobita/nobita_relieved): .....
+nobita (nobita/nobita_relieved_shock): ......Thats even worse!!!
+[signal arg="gian_exit2"]
+[wait time="3.0"]

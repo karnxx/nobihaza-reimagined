@@ -26,6 +26,12 @@ var setfaceing :String
 var isdming = false
 var is_dead = false
 var can_sound = true
+var attack_ready := true
+var rng := RandomNumberGenerator.new()
+var current_speed_multiplier := 1.0
+@export var min_speed_mult := 0.5
+@export var max_speed_mult := 1.5
+@export var speed_change_interval := 3.0
 func _ready() -> void:
 	pathfinding_grid.region = tilemap.get_used_rect()
 	pathfinding_grid.cell_size = Vector2(tile_size, tile_size)
@@ -33,10 +39,10 @@ func _ready() -> void:
 	pathfinding_grid.update()
 	for cell in collision.get_used_cells():
 		pathfinding_grid.set_point_solid(cell, true)
-
-
-
-
+	rng.randomize()
+	$sped.wait_time = randf_range(2.0, speed_change_interval)
+	$sped.start()
+	
 func _physics_process(delta: float) -> void:
 	if is_plr and not (
 		($move/up.is_colliding() and $move/up.get_collider().is_in_group("plr")) or
@@ -44,6 +50,7 @@ func _physics_process(delta: float) -> void:
 		($move/left.is_colliding() and $move/left.get_collider().is_in_group("plr")) or
 		($move/right.is_colliding() and $move/right.get_collider().is_in_group("plr"))) and is_ongrnd == false and is_falling == false and is_attacking == false and isdming == false:
 		chase()
+	print($AnimatedSprite2D.animation)
 	attack(delta)
 	if is_ongrnd == false and is_moving == false and not is_falling and not is_attacking and not isdming:
 		if facing == "left":
@@ -73,8 +80,8 @@ func chase():
 		var dir_id = next_id - from_id  
 		dir = Vector2(dir_id.x, dir_id.y)
 		if dir.x > 0:
-			$AnimatedSprite2D.play("walk_side")
-			$AnimatedSprite2D.flip_h = true
+			$AnimatedSprite2D.play("walk_side2")
+			$AnimatedSprite2D.flip_h = false
 			facing = "right"
 		elif dir.x < 0:
 			$AnimatedSprite2D.play("walk_side")
@@ -110,23 +117,21 @@ func move(goto: Vector2, speed_multiplier: float = 1.0) -> bool:
 
 	if not GameManager.is_tile_free(target_cell):
 		return false
-	if not is_dead:
+	if not is_falling:
 		GameManager.release_tile(current_cell)
 		GameManager.reserve_tile(target_cell, self)
-
 	is_moving = true
 	target_pos = goto   
 
 	var distance := global_position.distance_to(goto)
-	var duration = max(0.05, distance / (speed * speed_multiplier)) 
+	var duration = max(0.05, distance / (speed * speed_multiplier * current_speed_multiplier)) 
 	
 	if sprite_node_tween and sprite_node_tween.is_running():
 		sprite_node_tween.kill()
 	
 	sprite_node_tween = create_tween()
 	sprite_node_tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
-	sprite_node_tween.tween_property(self, "global_position", goto, duration)\
-		.set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
+	sprite_node_tween.tween_property(self, "global_position", goto, duration).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
 	sprite_node_tween.finished.connect(move_finish)
 
 	return true
@@ -134,57 +139,77 @@ func move(goto: Vector2, speed_multiplier: float = 1.0) -> bool:
 func move_finish() -> void:
 	is_moving = false
 
-func take_dmg(dmg):
-	health -= dmg
-	isdming = true
+func take_dmg(dmgad):
 	if is_dead:
 		return
+	health -= dmgad
+	isdming = true
 	var blood = preload("res://scene/particle/blood.tscn").instantiate()
-	get_tree().current_scene.add_child(blood)
-	blood.global_position = global_position
-	if facing == "left":
-		$AnimatedSprite2D.play("attacked_side")
-		$AnimatedSprite2D.flip_h = false
-	elif facing == "right":
-		$AnimatedSprite2D.play("attacked_side")
-		$AnimatedSprite2D.flip_h = true
-	elif facing == "up":
-		$AnimatedSprite2D.play("attacked_back")
-		$AnimatedSprite2D.flip_h = false
-	elif facing == "down":
-		$AnimatedSprite2D.play("attacked_front")
-		$AnimatedSprite2D.flip_h = false
-	if randi() % 2 == 0:
-		play_sound(preload("res://assets/music/sfc/zombie-6851.mp3"))
-	else:
-		play_sound(preload("res://assets/music/sfc/zombie-choking-44937.mp3"))
-	await get_tree().create_timer(0.8).timeout
 	
-	if health <= 0 and not is_dead:
+	if health > 0:
+		if facing == "left":
+			$AnimatedSprite2D.play("attacked_side")
+			$AnimatedSprite2D.flip_h = false
+		elif facing == "right":
+			$AnimatedSprite2D.play("attacked_side")
+			$AnimatedSprite2D.flip_h = true
+		elif facing == "up":
+			$AnimatedSprite2D.play("attacked_back")
+			$AnimatedSprite2D.flip_h = false
+		elif facing == "down":
+			$AnimatedSprite2D.play("attacked_front")
+			$AnimatedSprite2D.flip_h = false
+		if randi() % 2 == 0:
+			play_sound(preload("res://assets/music/sfc/zombie-6851.mp3"))
+		else:
+			play_sound(preload("res://assets/music/sfc/zombie-choking-44937.mp3"))
+		get_tree().current_scene.add_child(blood)
+		blood.global_position = global_position + Vector2(0, -10)
+		await get_tree().create_timer(0.8).timeout
+		isdming = false
+	else:
 		is_dead = true
-		
+		var head_off = false
+		if dmgad > 40 and randi() % 7 == 1:
+			head_off = true
 		set_collision_layer(0)
 		set_collision_mask(0)
 		$CollisionShape2D.disabled = true
 		$plrdetec/CollisionShape2D.disabled = true
-		
 		var cell := (global_position / tile_size).floor()
 		GameManager.release_tile(cell)
-		
-		if facing == "left":
-			self.thrown(Vector2.RIGHT, 1, "death")
-		elif facing == "right":
-			self.thrown(Vector2.LEFT, 1, "death")
-		elif facing == "up":
-			self.thrown(Vector2.DOWN, 1, "death")
-		elif facing == "down":
-			self.thrown(Vector2.UP, 1, "death")
-		play_sound(preload("res://assets/music/sfc/zmb2_dead-92305.mp3"))
+		if head_off == true:
+			if facing == "left":
+				self.thrown(Vector2.RIGHT, 0, "head_off_death")
+			elif facing == "right":
+				self.thrown(Vector2.LEFT, 0, "head_off_death")
+			elif facing == "up":
+				self.thrown(Vector2.DOWN, 0, "head_off_death")
+			elif facing == "down":
+				self.thrown(Vector2.UP, 0, "head_off_death")
+			play_sound(preload("res://assets/music/sfc/GORE - Head Explode   Sound Effect.mp3"))
+			blood.amount = 200
+			blood.lifetime = 0.6
+			blood.global_position = global_position + Vector2(0, -10)
+		elif head_off == false:
+			if facing == "left":
+				self.thrown(Vector2.RIGHT, 1, "death")
+			elif facing == "right":
+				self.thrown(Vector2.LEFT, 1, "death")
+			elif facing == "up":
+				self.thrown(Vector2.DOWN, 1, "death")
+			elif facing == "down":
+				self.thrown(Vector2.UP, 1, "death")
+			play_sound(preload("res://assets/music/sfc/zmb2_dead-92305.mp3"))
+			blood.amount = 50
+			blood.lifetime = 0.3
+			blood.global_position = global_position + Vector2(0, 5)
+		get_tree().current_scene.add_child(blood)
+		await $AnimatedSprite2D.animation_finished
+		await get_tree().create_timer(1).timeout
 		var twen = create_tween()
 		twen.tween_property($AnimatedSprite2D, "modulate:a", 0.0, 4.0)
 		twen.tween_callback(self.queue_free)
-		
-	isdming = false
 
 func _on_plrdetec_body_entered(body: Node2D) -> void:
 	if body.is_in_group("plr"):
@@ -193,7 +218,7 @@ func _on_plrdetec_body_entered(body: Node2D) -> void:
 
 func grab(player):
 	is_attacking = true
-	player.grabbed = true
+	player.start_grab(50, 5)
 	if is_dead:
 		return
 	while player.grabbed:
@@ -209,8 +234,10 @@ func grab(player):
 		elif facing == "down":
 			$AnimatedSprite2D.play("attack_front")
 			$AnimatedSprite2D.flip_h = false
-
+		if is_dead:
+			return
 		await get_tree().create_timer(1).timeout
+		
 		if player.grabbed == true:
 			player.get_dmged(randf_range(dmg * 0.9, dmg * 1.2))
 
@@ -228,8 +255,12 @@ func grab(player):
 
 func thrown(direca: Vector2, tiles:=2, use:="falling") -> void:
 	is_ongrnd = true
-	if is_moving: 
-		return
+	if is_moving:
+		if sprite_node_tween and sprite_node_tween.is_running():
+			sprite_node_tween.kill()
+		is_moving = false
+	var current_cell := (global_position / tile_size).floor()
+	GameManager.release_tile(current_cell)
 	set_collision_layer_value(1, false) 
 	set_collision_mask_value(1, false)
 	set_collision_layer_value(2, true)  
@@ -269,6 +300,19 @@ func thrown(direca: Vector2, tiles:=2, use:="falling") -> void:
 		elif direca == Vector2.DOWN:
 			$AnimatedSprite2D.play("died_front")
 			$AnimatedSprite2D.flip_h = false
+	elif use == "head_off_death":
+		if direca == Vector2.LEFT:
+			$AnimatedSprite2D.play("head_off_side")
+			$AnimatedSprite2D.flip_h = true
+		elif direca == Vector2.RIGHT:
+			$AnimatedSprite2D.play("head_off_side")
+			$AnimatedSprite2D.flip_h = false
+		elif direca == Vector2.UP:
+			$AnimatedSprite2D.play("head_off_back")
+			$AnimatedSprite2D.flip_h = false
+		elif direca == Vector2.DOWN:
+			$AnimatedSprite2D.play("head_off_front")
+			$AnimatedSprite2D.flip_h = false
 	var cell2 := (target2 / tile_size).floor()
 	if not pathfinding_grid.is_in_boundsv(cell2) or pathfinding_grid.is_point_solid(cell2):
 		var cell1 := (target1 / tile_size).floor()
@@ -292,11 +336,11 @@ func thrown(direca: Vector2, tiles:=2, use:="falling") -> void:
 
 	await get_tree().create_timer(1).timeout
 	
-func attack(delta):
-	var player = null
+func attack(_delta: float) -> void:
 	if is_ongrnd or is_dead:
 		return
-		
+
+	var player: Node2D = null
 	if $move/up.is_colliding() and $move/up.get_collider().is_in_group("plr"):
 		player = $move/up.get_collider()
 		facing = "up"
@@ -313,42 +357,40 @@ func attack(delta):
 		player = $move/right.get_collider()
 		facing = "right"
 		setfaceing = "left"
-
 	if player:
-		plr_in_range = true
-		time_in_range += delta
-
-		if time_in_range >= cd and not is_attacking:
-			time_in_range = 0.0
+		if not is_attacking and attack_ready:
 			is_attacking = true
-			var choices = randi_range(1, 5)
-
-			if choices >= 4:
-				player.facing = setfaceing
-				player.start_grab(randi_range(30, 50), 5)
-				await grab(player) 
-			else:
-				player.facing = setfaceing
-				if facing == "left":
+			match facing:
+				"left":
 					$AnimatedSprite2D.play("attack_side")
 					$AnimatedSprite2D.flip_h = false
-				elif facing == "right":
+				"right":
 					$AnimatedSprite2D.play("attack_side")
 					$AnimatedSprite2D.flip_h = true
-				elif facing == "up":
+				"up":
 					$AnimatedSprite2D.play("attack_back")
-					$AnimatedSprite2D.flip_h = false
-				elif facing == "down":
+				"down":
 					$AnimatedSprite2D.play("attack_front")
-					$AnimatedSprite2D.flip_h = false
+			$AnimationPlayer.play("attack")
+			await $AnimatedSprite2D.animation_finished
+			await $AnimationPlayer.animation_finished
+			await get_tree().create_timer(cd).timeout
+			is_attacking = false
+			attack_ready = true
+	
 
-				await $AnimatedSprite2D.animation_finished
-				player.get_dmged(randf_range(dmg * 0.7, dmg * 1.3))
-				is_attacking = false
+func acutally_attack():
+	if $move/right.is_colliding() and $move/right.get_collider().is_in_group("plr") or $move/left.is_colliding() and $move/left.get_collider().is_in_group("plr") or $move/down.is_colliding() and $move/down.get_collider().is_in_group("plr") or $move/up.is_colliding() and $move/up.get_collider().is_in_group("plr") and not plr.grabbed:
+		if randi_range(0, 100) < 70: 
+			plr.facing = setfaceing
+			plr.get_dmged(randf_range(dmg * 0.7, dmg * 1.3))
+			await get_tree().create_timer(cd).timeout
+		else:
+			plr.facing = setfaceing
+			grab(plr)
+		is_attacking = false
 	else:
-		time_in_range = 0.0
-		plr_in_range = false
-
+		await get_tree().create_timer(cd).timeout
 func play_sound(sound):
 	if $AudioStreamPlayer.playing:
 		return
@@ -364,3 +406,9 @@ func _on_tree_exiting() -> void:
 
 func _on_sound_timeout() -> void:
 	can_sound = true
+
+
+func _on_sped_timeout() -> void:
+	current_speed_multiplier = rng.randf_range(min_speed_mult, max_speed_mult)
+	$sped.wait_time = randf_range(2.0, speed_change_interval)
+	$sped.start()

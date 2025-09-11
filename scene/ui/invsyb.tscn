@@ -87,5 +87,6 @@ offset_right = 1079.0
 offset_bottom = 150.0
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"ui"
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

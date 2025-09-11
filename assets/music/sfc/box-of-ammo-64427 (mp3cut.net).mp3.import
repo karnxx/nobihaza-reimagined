@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bfn40p6rod20u"
+path="res://.godot/imported/box-of-ammo-64427 (mp3cut.net).mp3-c8fb0fb1607ce7eedff7872d5f3f1764.mp3str"
+
+[deps]
+
+source_file="res://assets/music/sfc/box-of-ammo-64427 (mp3cut.net).mp3"
+dest_files=["res://.godot/imported/box-of-ammo-64427 (mp3cut.net).mp3-c8fb0fb1607ce7eedff7872d5f3f1764.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -60,7 +60,8 @@ func item_focus(index):
 	name_lbl.text = item["name"]
 	desc.text = item["desc"]
 	qty.text = "x" + str(item["qty"])
-	effect.text = "Effect: " + item["effect"]
+	if item["effect"] != "":
+		effect.text = "Effect: " + item["effect"]
 	texture_rect.texture = item["texture"]
 	$AudioStreamPlayer.stream = preload("res://assets/music/sfc/select-button-ui-395763.mp3")
 	$AudioStreamPlayer.play()
@@ -69,9 +70,20 @@ func item_focus(index):
 func item_press(index):
 	var inv = InventoryManager.inv
 	var item = inv[index]
-	print("Pressed: %s" % item["name"])  
 	$AudioStreamPlayer.stream = preload("res://assets/music/sfc/item-pickup-37089.mp3")
 	$AudioStreamPlayer.play()
+	if item["type"] == "heal":
+		if item["name"] == "Green Herb":
+			get_parent().get_parent().heal(30)
+		elif item["name"] == "Red Herb":
+			get_parent().get_parent().heal(5)
+		item["qty"] -= 1
+		if item["qty"] <= 0:
+			inv[index] = null 
+		
+		
+		_populate_items()
+
 
 
 func _on_visibility_changed() -> void:

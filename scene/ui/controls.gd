@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	await get_tree().create_timer(3).timeout
 
 	var twen = create_tween()

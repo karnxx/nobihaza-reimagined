@@ -6,7 +6,8 @@ var need_to_release
 
 func change_scene(sceen, spawn) -> void:
 	next_spawn = spawn
-	get_tree().call_deferred("change_scene_to_file", sceen)
+	InventoryManager.save_inv()
+	SceneManager.change_scene(sceen, {"pattern_enter": "squares", "pattern_leave": "squares", "color" : Color('#ffffff')})
 
 func reserve_tile(cell: Vector2i, actor: Node) -> bool:
 	if reserved_tiles.has(cell) or need_to_release == cell:

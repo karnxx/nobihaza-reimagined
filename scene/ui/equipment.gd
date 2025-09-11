@@ -208,7 +208,7 @@ func _on_visibility_changed():
 	upd_stat()
 
 
-func _on_tab_container_tab_selected(tab: int) -> void:
+func _on_tab_container_tab_selected(_tab: int) -> void:
 	if visible:
 		$AudioStreamPlayer.stream = preload("res://assets/music/sfc/select-button-ui-395763.mp3")
 		$AudioStreamPlayer.play()

@@ -1,0 +1,56 @@
+{
+"@path": "res://addons/dialogic/Resources/character.gd",
+"@subpath": NodePath(""),
+&"_translation_id": "",
+&"color": Color(1, 1, 1, 1),
+&"custom_info": {
+"sound_mood_default": "",
+"sound_moods": {},
+"style": "normal"
+},
+&"default_portrait": "nobita/nobita_painful_eyes",
+&"description": "",
+&"display_name": "Nobita",
+&"mirror": false,
+&"nicknames": ["Nobita Nobi"],
+&"offset": Vector2(0, 0),
+&"portraits": {
+"nobita/nobita_painful_eyes": {
+"export_overrides": {
+"image": "\"res://assets/dialog/nobita/Nobita_Painful_Eyes_Sweat_VX.webp\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"nobita/nobita_painful_eyes_cry": {
+"export_overrides": {
+"image": "\"res://assets/dialog/nobita/Nobita_Painful_Eyes_3_Crying_2_VX.webp\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"nobita/nobita_relieved": {
+"export_overrides": {
+"image": "\"res://assets/dialog/nobita/Nobita_Sleep_Eyes_Sad_VX.webp\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+},
+"nobita/nobita_relieved_shock": {
+"export_overrides": {
+"image": "\"res://assets/dialog/nobita/5._Nobita_Shock_Scared_Sweat_VX.webp\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+}
+},
+&"scale": 1.0
+}

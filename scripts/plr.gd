@@ -18,15 +18,13 @@ var is_shooting:= false
 var is_dmging = false
 var can_shoot :=true
 var grabbed := false
-
+var is_reloading := false
 #the gun stuff v imp
 var primary_gun
 var secondary_gun
 var armor
 var utils
 var ammo_type
-var current_ammo :int
-var max_ammo:int
 var fire_rate:float
 var reload_time:float
 var defense:int = 0
@@ -49,7 +47,11 @@ func _ready() -> void:
 	InventoryManager.set_player(self)
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
+	InventoryManager.primary_gun = primary_gun
+	InventoryManager.secondary_gun = secondary_gun
+	InventoryManager.armor = armor
+	InventoryManager.utils = utils
 	if grabbed:
 		get_node("camera/interact").visible = true
 	else:
@@ -66,6 +68,8 @@ func _process(delta: float) -> void:
 		current_pr_damage = primary_gun['damage']
 	if secondary_gun != null:
 		current_sc_damage = secondary_gun['damage']
+	if Input.is_action_just_pressed("inv") and is_equipped and not grabbed and not is_shooting and not is_dmging:
+		reload()
 	grab_escape()
 	if Input.is_action_pressed("ui_up") :
 		facing = "up"
@@ -86,7 +90,7 @@ func animatee(animation: String, flip: bool) -> void:
 	$AnimatedSprite2D.flip_h = flip
 
 func movement() -> void:
-	if (sprite_node_tween and sprite_node_tween.is_running()) or is_equipping or is_shooting or is_dmging:
+	if (sprite_node_tween and sprite_node_tween.is_running()) or is_equipping or is_shooting or is_dmging or is_reloading:
 		return
 
 	var dir := Vector2.ZERO
@@ -171,6 +175,7 @@ func check_interactable():
 	var ray = dirs.get(facing)
 	if ray and ray.is_colliding():
 		var col = ray.get_collider()
+		print(col)
 		if col.has_method("interact"):
 			col.interact()
 
@@ -212,8 +217,6 @@ func equip() -> void:
 			anim = primary_gun["name"] + "_"
 			speed = primary_gun["walk_speed"] * tile_size
 			ammo_type = primary_gun["ammo_type"]
-			current_ammo = primary_gun["current_ammo"]
-			max_ammo = primary_gun["max_ammo"]
 			fire_rate = primary_gun["fire_rate"]
 			reload_time = primary_gun["reload_time"]
 			current_pr_damage = primary_gun["damage"]
@@ -253,6 +256,10 @@ func equip() -> void:
 
 func shoot():
 	if is_equipped == true and can_shoot:
+		if primary_gun['current_ammo'] <= 0:
+			$AudioStreamPlayer.stream = preload("res://assets/music/sfc/empty-gun-shot-6209.mp3")
+			$AudioStreamPlayer.play()
+			return
 		is_shooting = true
 		can_shoot = false
 		var guncrip = primary_gun["script"].new()
@@ -315,7 +322,7 @@ func get_dmged(dmg):
 		$AnimatedSprite2D.flip_h = false
 	await $AnimatedSprite2D.animation_finished
 	is_dmging = false
-	$AudioStreamPlayer.stream = preload("res://assets/music/sfc/088436_hurt-1-82785.mp3")
+	$AudioStreamPlayer.stream = preload("res://assets/music/sfc/waa.ogg")
 	$AudioStreamPlayer.play()
 	if current_health <= 0:
 		get_tree().reload_current_scene()
@@ -325,7 +332,6 @@ func start_grab(target, time):
 	grab_target = target
 	$timers/escape.wait_time = time
 	$timers/escape.start()
-	print("grab started")
 
 func grab_escape():
 	if grabbed:
@@ -333,15 +339,69 @@ func grab_escape():
 			pass
 		if Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("ui_down") or Input.is_action_just_pressed("ui_left") or Input.is_action_just_pressed("ui_right"):
 			current_prg += 5
-			print(grab_target)
-			print(current_prg)
 		if current_prg >= grab_target:
 			grabbed = false
 			current_prg = 0
-			print("escaped via spam")
-
 func _on_escape_timeout() -> void:
 	if grabbed:
 		grabbed = false
 		current_prg = 0
-		print("escaped via timer")
+
+	
+func reload() -> void:
+	if primary_gun['current_ammo'] >= primary_gun['max_ammo']:
+		return
+	
+	if primary_gun == null:
+		return
+	
+	if ammo_type == "":
+		return
+	
+	var ammo_item = null
+	for item in InventoryManager.inv:
+		if item == null:
+			continue
+		if item.has("type") and item["type"] == str(ammo_type) + " ammo" and item["name"] == ammo_type:
+			ammo_item = item
+			print(item, ammo_type, str(ammo_type) + " ammo")
+			break
+	
+	if ammo_item == null or ammo_item["qty"] <= 0:
+		return 
+	
+	is_reloading = true
+	can_shoot = false
+	if facing == "left":
+		$AnimatedSprite2D.play(primary_gun["name"] + "_idle_side")
+		$AnimatedSprite2D.flip_h = false
+	elif facing == "right":
+		$AnimatedSprite2D.play(primary_gun["name"] + "_idle_side")
+		$AnimatedSprite2D.flip_h = true
+	elif facing == "up":
+		$AnimatedSprite2D.play(primary_gun["name"] + "_idle_back")
+		$AnimatedSprite2D.flip_h = false
+	elif facing == "down":
+		$AnimatedSprite2D.play(primary_gun["name"] + "_idle_front")
+		$AnimatedSprite2D.flip_h = false
+	$AudioStreamPlayer.stream = preload("res://assets/music/sfc/gun-reload-2-395177.mp3")
+	$AudioStreamPlayer.play()
+	
+	await get_tree().create_timer(reload_time).timeout
+	var amo_needed = primary_gun['max_ammo'] - primary_gun['current_ammo']
+	var takenn = min(amo_needed, ammo_item["qty"])
+	primary_gun['current_ammo'] += takenn
+
+	ammo_item["qty"] -= takenn
+	
+	is_reloading = false
+	can_shoot = true
+
+func heal(amt):
+	current_health += amt
+	if current_health > max_health:
+		current_health = max_health
+
+func _on_tree_exiting() -> void:
+	var cell := (global_position / tile_size).floor()
+	GameManager.release_tile(cell)

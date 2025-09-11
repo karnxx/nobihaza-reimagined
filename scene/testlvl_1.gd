@@ -15,5 +15,18 @@ func _ready() -> void:
 		GameManager.next_spawn = ""
 
 	$door1.spawnwn = "corridor_spawn_1"
-	$AudioStreamPlayer.stream = current_music.pick_random()	
+	$AudioStreamPlayer.stream = current_music.pick_random()
 	$AudioStreamPlayer.play()
+	
+	var t := Timer.new()
+	t.wait_time = randi_range(13, 30)
+	t.autostart = true
+	t.timeout.connect(flicker_ambience)
+	add_child(t)
+
+func flicker_ambience():
+	if $AudioStreamPlayer2.playing:
+		return
+	if randi() % 5 == 0:
+		$AudioStreamPlayer2.stream = preload("res://assets/music/flickering-neon-316717.mp3")
+		$AudioStreamPlayer2.play()

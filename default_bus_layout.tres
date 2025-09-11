@@ -1,10 +1,16 @@
-[gd_resource type="AudioBusLayout" load_steps=3 format=3 uid="uid://b7dyq3y3wid0s"]
+[gd_resource type="AudioBusLayout" load_steps=5 format=3 uid="uid://b7dyq3y3wid0s"]
 
 [sub_resource type="AudioEffectChorus" id="AudioEffectChorus_j3pel"]
 resource_name = "Chorus"
 
 [sub_resource type="AudioEffectStereoEnhance" id="AudioEffectStereoEnhance_j3pel"]
 resource_name = "StereoEnhance"
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_j3pel"]
+resource_name = "Reverb"
+
+[sub_resource type="AudioEffectAmplify" id="AudioEffectAmplify_j3pel"]
+resource_name = "Amplify"
 
 [resource]
 bus/0/volume_db = -0.128275
@@ -24,3 +30,13 @@ bus/2/volume_db = 0.664978
 bus/2/send = &"Master"
 bus/2/effect/0/effect = SubResource("AudioEffectStereoEnhance_j3pel")
 bus/2/effect/0/enabled = true
+bus/2/effect/1/effect = SubResource("AudioEffectReverb_j3pel")
+bus/2/effect/1/enabled = true
+bus/3/name = &"ui"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = 0.0
+bus/3/send = &"Master"
+bus/3/effect/0/effect = SubResource("AudioEffectAmplify_j3pel")
+bus/3/effect/0/enabled = true

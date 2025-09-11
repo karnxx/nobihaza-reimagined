@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://b8d84wwwfmcgv"]
+[gd_scene load_steps=26 format=4 uid="uid://b8d84wwwfmcgv"]
 
 [ext_resource type="Script" uid="uid://bhikdweksvw7d" path="res://scene/testlvl_1.gd" id="1_bdj6y"]
 [ext_resource type="Texture2D" uid="uid://b0yjdydnc2oly" path="res://assets/tileset/customnobihaza.png" id="1_qg0hx"]
@@ -13,10 +13,15 @@
 [ext_resource type="PackedScene" uid="uid://dpe7jhfof2lqd" path="res://scene/ui/controls.tscn" id="9_wnisw"]
 [ext_resource type="PackedScene" uid="uid://c08svlhuvsrtt" path="res://scene/item/guns/pistol_item.tscn" id="10_bh2rr"]
 [ext_resource type="PackedScene" uid="uid://1uv0vpr162e7" path="res://scene/ui/interact.tscn" id="10_osycw"]
+[ext_resource type="PackedScene" uid="uid://bxc433s665u8m" path="res://scene/ui/bullets.tscn" id="11_fqpj8"]
 [ext_resource type="Texture2D" uid="uid://cldl6nxaqeah0" path="res://assets/items/pistol.png" id="11_gqchy"]
 [ext_resource type="Script" uid="uid://0hn2vtecp743" path="res://scene/item/guns/pistol.gd" id="12_jl8jv"]
-[ext_resource type="PackedScene" uid="uid://hptbepafjbl3" path="res://scene/npc/zombie/dummy.tscn" id="13_gjq6g"]
 [ext_resource type="Texture2D" uid="uid://bycnj2s24jiy" path="res://assets/items/handgun.png" id="13_pcxri"]
+[ext_resource type="PackedScene" uid="uid://b8krill8c662l" path="res://scene/item/bullet.tscn" id="19_hk3wd"]
+[ext_resource type="AudioStream" uid="uid://bfn40p6rod20u" path="res://assets/music/sfc/box-of-ammo-64427 (mp3cut.net).mp3" id="20_1rnyt"]
+[ext_resource type="Texture2D" uid="uid://bcrmk3mcwt0f3" path="res://assets/items/ammo/9mm.png" id="20_45vm6"]
+[ext_resource type="PackedScene" uid="uid://nrk2x71reuh5" path="res://scene/npc/chars/gian_test.tscn" id="22_517qx"]
+[ext_resource type="Texture2D" uid="uid://rr28oc5nag0c" path="res://assets/items/ammo/s&w.png" id="22_dfc4w"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_gjq6g"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -614,7 +619,7 @@ y_sort_enabled = true
 script = ExtResource("1_bdj6y")
 
 [node name="exaite" parent="." instance=ExtResource("2_twhkc")]
-position = Vector2(153, 40)
+position = Vector2(41, 24)
 type = "heal"
 nam = "Green Herb"
 desc = "Heals 30 health. Can be mixed with green herbs, blue herbs, and red herb."
@@ -623,7 +628,7 @@ effect = "+30 Health"
 qty = 1
 
 [node name="exaite2" parent="." instance=ExtResource("2_twhkc")]
-position = Vector2(169, 40)
+position = Vector2(57, 24)
 type = "heal"
 nam = "Red Herb"
 desc = "Red Herb....."
@@ -632,7 +637,7 @@ effect = "None"
 qty = 1
 
 [node name="plr" parent="." instance=ExtResource("5_bh2rr")]
-position = Vector2(233, 59)
+position = Vector2(233, 58)
 
 [node name="camera" type="Camera2D" parent="plr"]
 position = Vector2(-77, -19)
@@ -657,6 +662,8 @@ visible = false
 
 [node name="interact" parent="plr/camera" instance=ExtResource("10_osycw")]
 
+[node name="bullet" parent="plr/camera" instance=ExtResource("11_fqpj8")]
+
 [node name="door1" parent="." instance=ExtResource("9_bh2rr")]
 position = Vector2(72, -2)
 sceneeee = "res://scene/testlvl_2.tscn"
@@ -668,7 +675,7 @@ spawnwn = "corridor_spawn_1"
 position = Vector2(72, 11)
 
 [node name="pistol_item" parent="." instance=ExtResource("10_bh2rr")]
-position = Vector2(40, 24)
+position = Vector2(25, 8)
 nam = "pistol"
 desc = "Standard 9mm pistol used by the local police. It holds 15 rounds."
 textur = ExtResource("11_gqchy")
@@ -676,14 +683,14 @@ effect = "25 damage"
 qty = 1
 scene_path = ExtResource("12_jl8jv")
 ammo_type = "9mm"
-current_ammo = 6
+current_ammo = 15
 max_ammo = 15
 fire_rate = 0.2
 walk_speed = 5.0
 texthing = ExtResource("11_gqchy")
 
 [node name="pistol_item2" parent="." instance=ExtResource("10_bh2rr")]
-position = Vector2(185, 24)
+position = Vector2(25, 24)
 nam = "handgun"
 desc = "Normal Secondary type handgun, carried by the special forces. There is an IV symbol engraved on the magazine"
 textur = ExtResource("13_pcxri")
@@ -699,12 +706,6 @@ reload_time = 2.0
 walk_speed = 3.0
 rang = 400
 texthing = ExtResource("13_pcxri")
-
-[node name="dummy" parent="." node_paths=PackedStringArray("collision", "tilemap") instance=ExtResource("13_gjq6g")]
-position = Vector2(57, 43)
-dmg = 12
-collision = NodePath("../TileMap/collision")
-tilemap = NodePath("../TileMap/tiles here")
 
 [node name="TileMap" type="TileMap" parent="." groups=["tilemap"]]
 y_sort_enabled = true
@@ -734,3 +735,26 @@ tile_set = SubResource("TileSet_wuhm0")
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 autoplay = true
 bus = &"bg_muse"
+
+[node name="ammo" parent="." instance=ExtResource("19_hk3wd")]
+position = Vector2(41, 40)
+type = "9mm ammo"
+desc = "9mm Bullets, commonly used for lightweight pistols..."
+textur = ExtResource("20_45vm6")
+qty = 6
+sound = ExtResource("20_1rnyt")
+
+[node name="ammo2" parent="." instance=ExtResource("19_hk3wd")]
+position = Vector2(57, 8)
+type = "s&w ammo"
+nam = "s&w"
+desc = "S&W Bullets, commonly used for revolvers and all.."
+textur = ExtResource("22_dfc4w")
+qty = 30
+sound = ExtResource("20_1rnyt")
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+bus = &"sfx"
+
+[node name="gian_test" parent="." instance=ExtResource("22_517qx")]
+position = Vector2(153, 26)

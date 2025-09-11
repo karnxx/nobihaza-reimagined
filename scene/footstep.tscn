@@ -8,4 +8,6 @@ random_volume_offset_db = 4.0
 
 [node name="footstep" type="AudioStreamPlayer2D"]
 stream = SubResource("AudioStreamRandomizer_hy4i4")
+max_distance = 150.0
+bus = &"sfx"
 script = ExtResource("1_hy4i4")
