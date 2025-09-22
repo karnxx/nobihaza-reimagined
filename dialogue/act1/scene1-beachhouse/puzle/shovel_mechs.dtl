@@ -1,0 +1,9 @@
+[signal arg="start_cutscene"]
+label back
+tutorialnarator (inventory): Press I to go to the Inventory, Then go to the 'Equipment' Tab.
+tutorialnarator (selection): There, You can select different weapons.
+tutorialnarator (edfault\): Then press 'B' to use the item, while its equipped.
+- Repeat
+	jump back
+- Continue
+	[signal arg="end_cutscene"]

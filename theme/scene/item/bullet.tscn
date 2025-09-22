@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8krill8c662l"]
+
+[ext_resource type="Script" uid="uid://bqtmm3174sw6j" path="res://scene/item/exaite.gd" id="1_gn5o7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_brg5q"]
+size = Vector2(11, 11)
+
+[node name="ammo" type="StaticBody2D"]
+scale = Vector2(1.13864, 1)
+script = ExtResource("1_gn5o7")
+type = "ammo"
+nam = "9mm"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -2.38419e-07)
+scale = Vector2(0.1, 0.1)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_brg5q")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+bus = &"sfx"

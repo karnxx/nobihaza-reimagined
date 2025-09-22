@@ -1,0 +1,111 @@
+{
+"@path": "res://addons/dialogic/Resources/character.gd",
+"@subpath": NodePath(""),
+&"_translation_id": "",
+&"color": Color(1, 1, 1, 1),
+&"custom_info": {
+"sound_mood_default": "",
+"sound_moods": {
+"Mood 1": {
+"mode": 0,
+"name": "Mood 1",
+"pitch_base": 4.0,
+"pitch_variance": 3.0,
+"skip_characters": 2.0,
+"sound_path": "res://addons/dialogic/Example Assets/sound-effects/medium-text-blip-14855 (mp3cut.net).mp3",
+"volume_base": 10.0,
+"volume_variance": 10.0
+}
+},
+"style": "normal"
+},
+&"default_portrait": "bucketfull",
+&"description": "",
+&"display_name": "    ",
+&"mirror": false,
+&"nicknames": [""],
+&"offset": Vector2(0, 0),
+&"portraits": {
+"bucketempty": {
+"export_overrides": {
+"image": "\"res://assets/items/emptybucket.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": "",
+"sound_mood": "Mood 1"
+},
+"bucketfull": {
+"export_overrides": {
+"image": "\"res://assets/items/fullbucket.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": "",
+"sound_mood": "Mood 1"
+},
+"lighter": {
+"export_overrides": {
+"image": "\"res://assets/items/puzles/lighter.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": "",
+"sound_mood": "Mood 1"
+},
+"red_herb": {
+"export_overrides": {
+"image": "\"res://assets/items/red_herb.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": "",
+"sound_mood": "Mood 1"
+},
+"shedkey": {
+"export_overrides": {
+"image": "\"res://assets/items/shedkey.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": "",
+"sound_mood": "Mood 1"
+},
+"spinel": {
+"export_overrides": {
+"image": "\"res://assets/items/spinel.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": "",
+"sound_mood": "Mood 1"
+},
+"twig": {
+"export_overrides": {
+"image": "\"res://assets/items/twig.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": "",
+"sound_mood": "Mood 1"
+},
+"velvet_blu": {
+"export_overrides": {
+"image": "\"res://assets/items/velvet_blu.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": "",
+"sound_mood": "Mood 1"
+}
+},
+&"scale": 1.0
+}

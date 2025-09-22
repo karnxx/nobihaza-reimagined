@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://bt4pcgt34fam1"]
+
+[ext_resource type="Script" uid="uid://cpgqgx05pi6tv" path="res://chest.gd" id="1_6h45k"]
+[ext_resource type="Texture2D" uid="uid://dsb1s54kfkaim" path="res://assets/tileset/chest_closed.png" id="2_kd6e2"]
+[ext_resource type="AudioStream" uid="uid://dqapr72qvuis" path="res://assets/music/sfc/chest-opening-87569.mp3" id="3_kd6e2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hn73u"]
+size = Vector2(10, 10)
+
+[node name="chest" type="StaticBody2D"]
+collision_layer = 3
+collision_mask = 0
+script = ExtResource("1_6h45k")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_hn73u")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -7)
+texture = ExtResource("2_kd6e2")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_kd6e2")

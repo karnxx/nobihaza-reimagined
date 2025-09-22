@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="DialogicStyle" load_steps=5 format=3 uid="uid://bq1uul5wjs086"]
+
+[ext_resource type="Script" uid="uid://tl42103h1oxc" path="res://addons/dialogic/Resources/dialogic_style_layer.gd" id="1_a1lwm"]
+[ext_resource type="PackedScene" uid="uid://dcbd8he03o2xl" path="res://assets/dialog/narrarator/CustomNara/custom_nara.tscn" id="1_frfi3"]
+[ext_resource type="Script" uid="uid://dpwkakood52dh" path="res://addons/dialogic/Resources/dialogic_style.gd" id="9_reerc"]
+
+[sub_resource type="Resource" id="Resource_pw4t3"]
+script = ExtResource("1_a1lwm")
+scene = ExtResource("1_frfi3")
+overrides = {}
+
+[resource]
+script = ExtResource("9_reerc")
+name = "nara"
+layer_list = Array[String]([])
+layer_info = {
+"": SubResource("Resource_pw4t3")
+}
+base_overrides = {}
+layers = Array[ExtResource("1_a1lwm")]([])
+metadata/_latest_layer = ""

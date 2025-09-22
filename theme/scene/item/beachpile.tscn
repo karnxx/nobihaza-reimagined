@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://4aj2m450h63j"]
+
+[ext_resource type="Script" uid="uid://dg5j1o323b8jx" path="res://beachpile.gd" id="1_wpoa4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kakpv"]
+size = Vector2(10, 10)
+
+[node name="beachpile" type="StaticBody2D" groups=["enemy"]]
+collision_layer = 7
+collision_mask = 0
+script = ExtResource("1_wpoa4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_kakpv")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+bus = &"sfx"

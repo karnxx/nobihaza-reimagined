@@ -1,0 +1,4 @@
+[signal arg="start_cutscene"]
+nobita (nobita/nobita_relieved): I should probably explore this cabin before i go out...
+[wait time="0.5"]
+[signal arg="end_cutscene"]

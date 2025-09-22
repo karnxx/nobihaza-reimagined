@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="DialogicStyle" load_steps=5 format=3 uid="uid://btw1qnb6woprl"]
+
+[ext_resource type="Script" uid="uid://tl42103h1oxc" path="res://addons/dialogic/Resources/dialogic_style_layer.gd" id="1_j66vu"]
+[ext_resource type="PackedScene" uid="uid://bo5ujglb7sgwj" path="res://dialogue/styke/CustomBetternow/custom_betternow.tscn" id="1_klv5d"]
+[ext_resource type="Script" uid="uid://dpwkakood52dh" path="res://addons/dialogic/Resources/dialogic_style.gd" id="9_7jljm"]
+
+[sub_resource type="Resource" id="Resource_x4t8k"]
+script = ExtResource("1_j66vu")
+scene = ExtResource("1_klv5d")
+overrides = {}
+
+[resource]
+script = ExtResource("9_7jljm")
+name = "betternow"
+layer_list = Array[String]([])
+layer_info = {
+"": SubResource("Resource_x4t8k")
+}
+base_overrides = {}
+layers = Array[ExtResource("1_j66vu")]([])
+metadata/_latest_layer = ""

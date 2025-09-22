@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://b1we68lar3vrv"]
+
+[ext_resource type="Shader" uid="uid://su4etiqofk4h" path="res://assets/shader/blyr.gdshader" id="1_2br0o"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2br0o"]
+shader = ExtResource("1_2br0o")
+shader_parameter/blur_amount = 0.51
+
+[node name="blur" type="CanvasLayer"]
+layer = 0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_2br0o")
+use_parent_material = true
+offset_right = 1152.0
+offset_bottom = 648.0

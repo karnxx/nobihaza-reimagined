@@ -1,0 +1,5 @@
+[signal arg="start_cutscene"]
+nobita (nobita/nobita_question): There's a pile of sand... It looks like something in underneath it...
+nobita (nobita/nobita_question): I'll need a tool for this.. It would be impossible to dig by hand..
+[wait time="0.5"]
+[signal arg="end_cutscene"]

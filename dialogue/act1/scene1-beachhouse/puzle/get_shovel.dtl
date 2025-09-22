@@ -1,0 +1,5 @@
+[signal arg="start_cutscene"]
+nobita (nobita/nobita_relieved): ...Shovel huh? I can dig stuff with this...
+[wait time="0.5"]
+[signal arg="end_cutscene"]
+[signal arg="show_shov_mechs"]

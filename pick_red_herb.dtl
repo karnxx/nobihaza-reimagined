@@ -1,0 +1,4 @@
+[signal arg="start_cutscene"]
+nararter2 (red_herb): Red Herb Received.
+[wait time="0.5"]
+[signal arg="end_cutscene"]

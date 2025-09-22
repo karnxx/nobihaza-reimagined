@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxc433s665u8m"]
+
+[ext_resource type="Script" uid="uid://c1khxjtqa3441" path="res://bullet.gd" id="1_hpfsy"]
+
+[node name="bullet" type="CanvasLayer"]
+script = ExtResource("1_hpfsy")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 1094.0
+offset_top = 617.0
+offset_right = 1134.0
+offset_bottom = 640.0

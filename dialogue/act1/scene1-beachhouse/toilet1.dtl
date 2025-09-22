@@ -1,0 +1,4 @@
+[signal arg="start_cutscene"]
+nobita (nobita/nobita_neutral): I dont think i wanna use this right now... I have more important stuff to do...
+[wait time="0.5"]
+[signal arg="end_cutscene"]

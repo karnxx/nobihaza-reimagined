@@ -1,0 +1,4 @@
+[signal arg="start_cutscene"]
+nobita (nobita/nobita_neutral): Huh..? Where does this connect to??
+[wait time="0.5"]
+[signal arg="end_cutscene"]

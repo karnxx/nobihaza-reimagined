@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b38jystpeyi5t"]
+
+[ext_resource type="Script" uid="uid://c5taivnlncp7o" path="res://log_puzle.gd" id="1_1j6jo"]
+[ext_resource type="Texture2D" uid="uid://llcjm77fnt5f" path="res://assets/items/puzles/logstate1.png" id="2_sxeps"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1kljd"]
+size = Vector2(78, 18)
+
+[node name="log_puzle" type="StaticBody2D"]
+script = ExtResource("1_1j6jo")
+
+[node name="sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -4)
+texture = ExtResource("2_sxeps")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1kljd")

@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="DialogicStyle" load_steps=5 format=3 uid="uid://b6yowv75ver6r"]
+
+[ext_resource type="Script" uid="uid://tl42103h1oxc" path="res://addons/dialogic/Resources/dialogic_style_layer.gd" id="1_uqqbx"]
+[ext_resource type="PackedScene" uid="uid://b8fyal7m3qd0l" path="res://assets/dialog/narrarator/CustomNewFile3/custom_new_file_3.tscn" id="1_wgpdj"]
+[ext_resource type="Script" uid="uid://dpwkakood52dh" path="res://addons/dialogic/Resources/dialogic_style.gd" id="10_txb5b"]
+
+[sub_resource type="Resource" id="Resource_ohulh"]
+script = ExtResource("1_uqqbx")
+scene = ExtResource("1_wgpdj")
+overrides = {}
+
+[resource]
+script = ExtResource("10_txb5b")
+name = "New_File 3"
+layer_list = Array[String]([])
+layer_info = {
+"": SubResource("Resource_ohulh")
+}
+base_overrides = {}
+layers = Array[ExtResource("1_uqqbx")]([])
+metadata/_latest_layer = ""

@@ -84,8 +84,8 @@ func _apply_export_overrides() -> void:
 		dialog_text.add_theme_font_override(&"bold_italics_font", load(custom_bold_italic_font) as Font)
 
 	## BOX SETTINGS
-	var panel: PanelContainer = %Panel
-	var portrait_panel: Panel = %PortraitPanel
+	var panel:  = %Panel
+	var portrait_panel: = %PortraitPanel
 	if box_modulate_global_color:
 		panel.self_modulate = get_global_setting(&'bg_color', box_modulate_custom_color)
 	else:
@@ -98,7 +98,7 @@ func _apply_export_overrides() -> void:
 	panel.add_theme_stylebox_override(&'panel', stylebox)
 
 	## PORTRAIT SETTINGS
-	var portrait_background_color: ColorRect = %PortraitBackgroundColor
+	var portrait_background_color:  = %PortraitBackgroundColor
 	portrait_background_color.color = portrait_bg_modulate
 
 	portrait_panel.get_parent().move_child(portrait_panel, portrait_position)

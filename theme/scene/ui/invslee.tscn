@@ -1,0 +1,56 @@
+[gd_scene load_steps=5 format=3 uid="uid://cyqjlxtmhfqxb"]
+
+[ext_resource type="StyleBox" uid="uid://c5u57pkp8hvrt" path="res://dialogue/styke/CustomNormal/custom_normal.tres" id="1_xmx5y"]
+[ext_resource type="Script" uid="uid://blttvgp85uvyl" path="res://scene/ui/invslee.gd" id="1_xnsh6"]
+[ext_resource type="FontFile" uid="uid://dsix43ph6yvjm" path="res://assets/fonts/PixelifySans-VariableFont_wght.ttf" id="2_xnsh6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_c7dld"]
+
+[node name="invslee" type="CanvasLayer"]
+script = ExtResource("1_xnsh6")
+
+[node name="Panel" type="PanelContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -534.0
+offset_top = -285.0
+offset_right = 537.0
+offset_bottom = -43.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("1_xmx5y")
+
+[node name="VBoxContainer" type="Panel" parent="Panel"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_c7dld")
+
+[node name="GridContainer" type="VBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 12.0
+offset_right = 1058.0
+offset_bottom = 227.0
+
+[node name="dialoig" type="RichTextLabel" parent="Panel/VBoxContainer"]
+visible = false
+offset_left = 21.0
+offset_top = 64.0
+offset_right = 787.0
+offset_bottom = 213.0
+size_flags_vertical = 3
+theme_override_fonts/normal_font = ExtResource("2_xnsh6")
+theme_override_font_sizes/bold_italics_font_size = 40
+theme_override_font_sizes/italics_font_size = 40
+theme_override_font_sizes/mono_font_size = 40
+theme_override_font_sizes/normal_font_size = 40
+theme_override_font_sizes/bold_font_size = 40
+bbcode_enabled = true
+text = "Some text"
+scroll_following = true
+visible_characters_behavior = 1

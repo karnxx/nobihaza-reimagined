@@ -1,0 +1,4 @@
+[signal arg="start_cutscene"]
+nobita (nobita/nobita_neutral): Lighter..? And it works...
+nararter2 (lighter): Lighter Received.
+[wait time="0.5"]

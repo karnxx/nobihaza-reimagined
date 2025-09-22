@@ -29,6 +29,13 @@ func get_style_suggestions(filter:String="") -> Dictionary:
 	var suggestions := {}
 	suggestions["No Style"] = {'value': "", 'editor_icon': ["EditorHandleDisabled", "EditorIcons"]}
 	for i in styles:
-		var style: DialogicStyle = load(i)
-		suggestions[style.name] = {'value': style.name, 'editor_icon': ["PopupMenu", "EditorIcons"]}
+		var style = load(i)
+		if style and style is DialogicStyle:
+			suggestions[style.name] = {
+				'value': style.name,
+				'editor_icon': ["PopupMenu", "EditorIcons"]
+			}
+		else:
+			push_warning("Invalid style resource: %s" % i)
+
 	return suggestions

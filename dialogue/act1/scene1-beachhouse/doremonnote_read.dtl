@@ -1,0 +1,11 @@
+[signal arg="start_cutscene"]
+narrarator (doremon_note): To Nobita..\\
+I had to go back early because of important work.\\
+Don’t worry, you can go home tomorrow.
+narrarator (doremon_note): I left the Anywhere Door here for you.\\
+Use it when you are ready.\\
+I have a spare with me, so it’s okay.
+narrarator (doremon_note): Make sure you get back safely.
+narrarator (doremon_note): —Doraemon
+[wait time="0.5"]
+[signal arg="end_cutscene"]

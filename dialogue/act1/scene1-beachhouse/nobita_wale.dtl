@@ -1,0 +1,40 @@
+[signal arg="start_cutscene"]
+narrarator (default): 28/7/2004
+narrarator (default): Doraemon took us to an isolated island for our summer vacation.
+narrarator (default): We enjoyed to our hearts’ content without anyone interrupting us.
+narrarator (default): Shizuka, Gian, and Suneo went home earlier than planned.
+narrarator (default): Only me and Doraemon stayed behind for one more day.
+narrarator (default): We never thought… it would turn into a nightmare.
+[wait time="2.0"]
+nobita (nobita/nobita_sleep): ...…Zzzzzzzzz.....zzz.
+nobita (nobita/nobita_sleep_blush): ...…Hehe… Shizuka-chan… you really baked some cookies… just for me…?
+nobita (nobita/nobita_sleep): …ugh… Giannn… not fairrr… Doooraeeeeeemonnnnnn!!, help… just one gadgettt…
+nobita (nobita/nobita_waking): …Eh…? Wha…? Why does it smell so… dusty…?
+[wait time="0.5"]
+[signal arg="eyes_open"]
+[wait time="0.5"]
+[signal arg="eyes_close"]
+[wait time="0.5"]
+[signal arg="eyes_open"]
+[wait time="0.3"]
+[signal arg="eyes_close"]
+[wait time="0.1"]
+[signal arg="eyes_open"]
+[wait time="0.1"]
+[signal arg="cutscene_jump"]
+[wait time="0.3"]
+[signal arg="look_down"]
+[wait time="0.1"]
+[signal arg="look_right"]
+[wait time="0.1"]
+[signal arg="look_up"]
+[wait time="0.1"]
+[signal arg="look_left"]
+[wait time="0.1"]
+nobita (nobita/nobita_surprised_closed): Eh…!? W-Where am I??? D-Doraemon!?
+[signal arg="left_1_plr"]
+nobita (nobita/nobita_relieved_shock): D-Doraemon… this isn’t funny…!
+nobita: I need to look around!
+[wait time="0.7"]
+[signal arg="end_cutscene"]
+tutorialnarator (wasd move): WASD to move, I for inventory, J to equip primary, N to accept/interact, B to use secondary..

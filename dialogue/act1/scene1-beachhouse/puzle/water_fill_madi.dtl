@@ -1,0 +1,5 @@
+[signal arg="start_cutscene"]
+nobita (nobita/nobita_neutral): Looks like i can fill water here...
+nararter2 (bucketfull): Received Bucket Of Water
+[wait time="0.5"]
+[signal arg="end_cutscene"]

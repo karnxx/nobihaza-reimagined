@@ -148,7 +148,7 @@ func _apply_export_overrides() -> void:
 ## Applies all text box settings to the scene.
 ## Except the box animations.
 func _apply_box_settings() -> void:
-	var dialog_text_panel: PanelContainer = %DialogTextPanel
+	var dialog_text_panel: = %DialogTextPanel
 	if ResourceLoader.exists(box_panel):
 		dialog_text_panel.add_theme_stylebox_override(&'panel', load(box_panel) as StyleBox)
 
@@ -191,7 +191,7 @@ func _apply_name_label_settings() -> void:
 
 	name_label.use_character_color = name_label_use_character_color
 
-	var name_label_panel: PanelContainer = %NameLabelPanel
+	var name_label_panel:  = %NameLabelPanel
 	if ResourceLoader.exists(name_label_box_panel):
 		name_label_panel.add_theme_stylebox_override(&'panel', load(name_label_box_panel) as StyleBox)
 	else:
@@ -201,7 +201,7 @@ func _apply_name_label_settings() -> void:
 		name_label_panel.self_modulate = get_global_setting(&'bg_color', name_label_box_modulate)
 	else:
 		name_label_panel.self_modulate = name_label_box_modulate
-	var dialog_text_panel: PanelContainer = %DialogTextPanel
+	var dialog_text_panel:  = %DialogTextPanel
 	name_label_panel.position = name_label_box_offset+Vector2(0, -40)
 	name_label_panel.position -= Vector2(
 		dialog_text_panel.get_theme_stylebox(&'panel', &'PanelContainer').content_margin_left,

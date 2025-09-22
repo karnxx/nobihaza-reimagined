@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://ckltw3ci7u41n"]
+
+[ext_resource type="Script" uid="uid://b5u8iw00h7vj8" path="res://scene/walkdoor.gd" id="1_4ihh5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y5pye"]
+size = Vector2(8, 8)
+
+[node name="walkdoor" type="StaticBody2D"]
+script = ExtResource("1_4ihh5")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_y5pye")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_y5pye")
+disabled = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

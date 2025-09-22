@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cy0tb68d3j58w"
+path="res://.godot/imported/sand-walk-106366 (mp3cut.net) (1).mp3-89887f9f82b194ea6637a39490e49087.mp3str"
+
+[deps]
+
+source_file="res://assets/music/footstep/sand-walk-106366 (mp3cut.net) (1).mp3"
+dest_files=["res://.godot/imported/sand-walk-106366 (mp3cut.net) (1).mp3-89887f9f82b194ea6637a39490e49087.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

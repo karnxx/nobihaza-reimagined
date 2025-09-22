@@ -5,7 +5,18 @@
 &"color": Color(0.992188, 0.525888, 0.217041, 1),
 &"custom_info": {
 "sound_mood_default": "",
-"sound_moods": {},
+"sound_moods": {
+"Mood 1": {
+"mode": 1,
+"name": "Mood 1",
+"pitch_base": 0.7,
+"pitch_variance": 0.0,
+"skip_characters": 0.0,
+"sound_path": "res://addons/dialogic/Example Assets/sound-effects/medium-text-blip-14855 (mp3cut.net).mp3",
+"volume_base": 0.0,
+"volume_variance": 0.0
+}
+},
 "style": "normal"
 },
 &"default_portrait": "gian/gian_normal",

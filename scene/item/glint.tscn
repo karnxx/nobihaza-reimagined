@@ -1,0 +1,97 @@
+[gd_scene load_steps=11 format=3 uid="uid://53u2ci77dwen"]
+
+[ext_resource type="Texture2D" uid="uid://dbredqsfyb55h" path="res://scene/item/glintt.png" id="1_ee7mo"]
+[ext_resource type="Script" uid="uid://cadxqs25nvfft" path="res://glint.gd" id="2_28ode"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wgi8h"]
+atlas = ExtResource("1_ee7mo")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_35fg3"]
+atlas = ExtResource("1_ee7mo")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vrujx"]
+atlas = ExtResource("1_ee7mo")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qjc0u"]
+atlas = ExtResource("1_ee7mo")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fc70d"]
+atlas = ExtResource("1_ee7mo")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ai7pm"]
+atlas = ExtResource("1_ee7mo")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sqdsl"]
+atlas = ExtResource("1_ee7mo")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fc2nr"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wgi8h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_35fg3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vrujx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qjc0u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fc70d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ai7pm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sqdsl")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[node name="glint" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_fc2nr")
+animation = &"new_animation"
+autoplay = "new_animation"
+frame_progress = 0.975854
+script = ExtResource("2_28ode")

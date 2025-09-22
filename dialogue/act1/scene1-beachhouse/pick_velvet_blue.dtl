@@ -1,0 +1,4 @@
+[signal arg="start_cutscene"]
+nararter2 (twig): Velvet Blue Received.
+[wait time="0.5"]
+[signal arg="end_cutscene"]

@@ -167,12 +167,50 @@ func _change_portrait(character_node: Node2D, portrait: String, fade_animation:=
 ## Unless @force is false, this will take into consideration the character mirror,
 ## portrait mirror and portrait position mirror settings.
 func _change_portrait_mirror(character_node: Node2D, mirrored := false, force := false) -> void:
-	var latest_portrait := character_node.get_child(-1)
+	# safety: ensure there's a latest portrait to operate on
+	if character_node.get_child_count() == 0:
+		return
 
-	if latest_portrait.has_method('_set_mirror'):
-		var character: DialogicCharacter = character_node.get_meta('character')
-		var current_portrait_info := character.get_portrait_info(character_node.get_meta('portrait'))
-		latest_portrait._set_mirror(force or (mirrored != character.mirror != character_node.get_parent().mirrored != current_portrait_info.get('mirror', false)))
+	var latest_portrait := character_node.get_child(-1)
+	if not latest_portrait:
+		return
+
+	if not latest_portrait.has_method('_set_mirror'):
+		return
+
+	# gather sources for mirror safely
+	var character: DialogicCharacter = null
+	if character_node.has_meta('character'):
+		character = character_node.get_meta('character')
+
+	var character_mirror := false
+	if character:
+		# character.mirror might exist on DialogicCharacter; be defensive
+		if "mirror" in character or (character.has_method("get") and character.get("mirror") != null):
+			# best-effort read; if property doesn't exist, default false
+			character_mirror = bool(character.mirror) if typeof(character.mirror) != TYPE_NIL else false
+		else:
+			character_mirror = false
+
+	# safe access to container mirrored: check parent exists and is the expected container type
+	var container_mirrored := false
+	var container := character_node.get_parent()
+	if container and container is DialogicNode_PortraitContainer:
+		# assume DialogicNode_PortraitContainer has property 'mirrored'
+		container_mirrored = bool(container.mirrored)
+	else:
+		container_mirrored = false
+
+	# portrait-specific mirror flag (from portrait info)
+	var current_portrait_info := {}
+	if character:
+		current_portrait_info = character.get_portrait_info(character_node.get_meta('portrait')) if character.has_method("get_portrait_info") else {}
+
+	var portrait_specific_mirror := bool(current_portrait_info.get('mirror', false))
+
+	# compute effective mirror and set it
+	var effective_mirror := force or (mirrored != character_mirror != container_mirrored != portrait_specific_mirror)
+	latest_portrait._set_mirror(effective_mirror)
 
 
 func _change_portrait_extradata(character_node: Node2D, extra_data := "") -> void:
@@ -181,7 +219,7 @@ func _change_portrait_extradata(character_node: Node2D, extra_data := "") -> voi
 	if latest_portrait.has_method('_set_extra_data'):
 		latest_portrait._set_extra_data(extra_data)
 
-
+	
 func _update_character_transform(character_node:Node, time := 0.0) -> void:
 	for child in character_node.get_children():
 		_update_portrait_transform(child, time)

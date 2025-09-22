@@ -5,7 +5,38 @@
 &"color": Color(1, 1, 1, 1),
 &"custom_info": {
 "sound_mood_default": "",
-"sound_moods": {},
+"sound_moods": {
+"Mood 1": {
+"mode": 0,
+"name": "Mood 1",
+"pitch_base": 1.3,
+"pitch_variance": 1.1,
+"skip_characters": 1.0,
+"sound_path": "res://addons/dialogic/Example Assets/sound-effects/medium-text-blip-14855 (mp3cut.net).mp3",
+"volume_base": 10.0,
+"volume_variance": 10.0
+},
+"Mood 2": {
+"mode": 0,
+"name": "Mood 2",
+"pitch_base": 1.1,
+"pitch_variance": 1.0,
+"skip_characters": 1.0,
+"sound_path": "res://addons/dialogic/Example Assets/sound-effects/medium-text-blip-14855 (mp3cut.net).mp3",
+"volume_base": 10.0,
+"volume_variance": 10.0
+},
+"Mood 3": {
+"mode": 0,
+"name": "Mood 3",
+"pitch_base": 2.5,
+"pitch_variance": 1.5,
+"skip_characters": 1.0,
+"sound_path": "res://addons/dialogic/Example Assets/sound-effects/medium-text-blip-14855 (mp3cut.net).mp3",
+"volume_base": 10.0,
+"volume_variance": 10.0
+}
+},
 "style": "normal"
 },
 &"default_portrait": "nobita/nobita_painful_eyes",
@@ -15,6 +46,16 @@
 &"nicknames": ["Nobita Nobi"],
 &"offset": Vector2(0, 0),
 &"portraits": {
+"nobita/nobita_neutral": {
+"export_overrides": {
+"image": "\"res://assets/dialog/nobita/Nobita_Netural_2.webp\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": "",
+"sound_mood": "Mood 1"
+},
 "nobita/nobita_painful_eyes": {
 "export_overrides": {
 "image": "\"res://assets/dialog/nobita/Nobita_Painful_Eyes_Sweat_VX.webp\""
@@ -22,7 +63,8 @@
 "mirror": false,
 "offset": Vector2(0, 0),
 "scale": 1,
-"scene": ""
+"scene": "",
+"sound_mood": "Mood 2"
 },
 "nobita/nobita_painful_eyes_cry": {
 "export_overrides": {
@@ -31,7 +73,28 @@
 "mirror": false,
 "offset": Vector2(0, 0),
 "scale": 1,
-"scene": ""
+"scene": "",
+"sound_mood": "Mood 3"
+},
+"nobita/nobita_question": {
+"export_overrides": {
+"image": "\"res://assets/dialog/nobita/9._Nobita_Question_VX.webp\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": "",
+"sound_mood": "Mood 1"
+},
+"nobita/nobita_rage": {
+"export_overrides": {
+"image": "\"res://assets/dialog/nobita/8._Nobita_Rage_VX.webp\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": "",
+"sound_mood": "Mood 3"
 },
 "nobita/nobita_relieved": {
 "export_overrides": {
@@ -40,7 +103,8 @@
 "mirror": false,
 "offset": Vector2(0, 0),
 "scale": 1,
-"scene": ""
+"scene": "",
+"sound_mood": "Mood 2"
 },
 "nobita/nobita_relieved_shock": {
 "export_overrides": {
@@ -49,7 +113,57 @@
 "mirror": false,
 "offset": Vector2(0, 0),
 "scale": 1,
+"scene": "",
+"sound_mood": "Mood 3"
+},
+"nobita/nobita_scared": {
+"export_overrides": {
+"image": "\"res://assets/dialog/nobita/Nobita_Scared_VX.webp\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": "",
+"sound_mood": "Mood 3"
+},
+"nobita/nobita_sleep": {
+"export_overrides": {
+"image": "\"res://assets/dialog/nobita/14._Nobita_Sleep_Eyes_VX.webp\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
 "scene": ""
+},
+"nobita/nobita_sleep_blush": {
+"export_overrides": {
+"image": "\"res://assets/dialog/nobita/Nobita_3D_Eyes_Blushing_VX.webp\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": "",
+"sound_mood": "Mood 1"
+},
+"nobita/nobita_surprised_closed": {
+"export_overrides": {
+"image": "\"res://assets/dialog/nobita/Nobita_Painful_Eyes_Surprised_VX.webp\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": "",
+"sound_mood": "Mood 3"
+},
+"nobita/nobita_waking": {
+"export_overrides": {
+"image": "\"res://assets/dialog/nobita/Nobita_waking_VX.webp\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": "",
+"sound_mood": "Mood 1"
 }
 },
 &"scale": 1.0

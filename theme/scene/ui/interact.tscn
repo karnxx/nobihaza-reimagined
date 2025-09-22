@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://1uv0vpr162e7"]
+
+[node name="interact" type="CanvasLayer"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 691.0
+offset_top = 38.0
+offset_right = 814.0
+offset_bottom = 61.0
+text = "YOU ARE GRABBED! SPAM MOVEMENT BUTTONS!"

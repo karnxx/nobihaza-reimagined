@@ -1,0 +1,52 @@
+{
+"@path": "res://addons/dialogic/Resources/character.gd",
+"@subpath": NodePath(""),
+&"_translation_id": "",
+&"color": Color(1, 1, 1, 1),
+&"custom_info": {
+"sound_mood_default": "",
+"sound_moods": {
+"Mood 1": {
+"mode": 0,
+"name": "Mood 1",
+"pitch_base": 1.0,
+"pitch_variance": 0.7,
+"skip_characters": 1.0,
+"sound_path": "res://addons/dialogic/Example Assets/sound-effects/medium-text-blip-14855 (mp3cut.net).mp3",
+"volume_base": 10.0,
+"volume_variance": 10.0
+}
+},
+"style": "nara"
+},
+&"default_portrait": "default",
+&"description": "",
+&"display_name": "narrarator",
+&"mirror": false,
+&"nicknames": ["kk"],
+&"offset": Vector2(0, 0),
+&"portraits": {
+"default": {
+"export_overrides": {
+"image": "\"res://assets/dialog/narrarator/thnig.png\""
+},
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": "",
+"sound_mood": "Mood 1"
+},
+"doremon_note": {
+"export_overrides": {
+"image": "\"res://assets/items/doremonnote.png\""
+},
+"ignore_char_scale": false,
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": "",
+"sound_mood": "Mood 1"
+}
+},
+&"scale": 1.0
+}
